@@ -1,0 +1,182 @@
+Table users {
+  id bigint [pk, increment]
+  name varchar
+  email varchar [unique]
+  email_verified_at timestamp [null]
+  password varchar [null]
+  avatar varchar [null]
+  remember_token varchar [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table product_categories {
+  id bigint [pk, increment]
+  category_name varchar
+  slug varchar [unique]
+  description text [null]
+  parent_id bigint [ref: > product_categories.id, null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table products {
+  id bigint [pk, increment]
+  product_name varchar
+  slug varchar [unique]
+  description text
+  specifications text [null]
+  price decimal(12,2) [null]
+  final_price decimal(12,2) [null]
+  external_link varchar [null]
+  status varchar
+  seo_title varchar [null]
+  seo_description text [null]
+  seo_keywords text [null]
+  category_id bigint [ref: > product_categories.id]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table product_images {
+  id bigint [pk, increment]
+  product_id bigint [ref: > products.id]
+  image_url varchar
+  alt_text varchar [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table post_categories {
+  id bigint [pk, increment]
+  category_name varchar
+  slug varchar [unique]
+  description text [null]
+  parent_id bigint [ref: > post_categories.id, null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table posts {
+  id bigint [pk, increment]
+  title varchar
+  slug varchar [unique]
+  content text
+  featured_image varchar [null]
+  category_id bigint [ref: > post_categories.id]
+  tags text [null]
+  author_id bigint [ref: > users.id]
+  published_date datetime
+  seo_title varchar [null]
+  seo_description text [null]
+  seo_keywords text [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table pages {
+  id bigint [pk, increment]
+  title varchar
+  slug varchar [unique]
+  content text
+  featured_image varchar [null]
+  seo_title varchar [null]
+  seo_description text [null]
+  seo_keywords text [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table menus {
+  id bigint [pk, increment]
+  menu_name varchar
+  parent_id bigint [ref: > menus.id, null]
+  link_type varchar
+  link_id bigint [null]
+  custom_url varchar [null]
+  order_no int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table settings {
+  id bigint [pk, increment]
+  key varchar
+  value text
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table seo_meta {
+  id bigint [pk, increment]
+  entity_type varchar
+  entity_id bigint
+  meta_title varchar [null]
+  meta_description text [null]
+  meta_keywords text [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table sliders {
+  id bigint [pk, increment]
+  title varchar
+  subtitle varchar [null]
+  image_url varchar
+  button_text varchar [null]
+  button_link varchar [null]
+  order_no int [default: 0]
+  status varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table company_profiles {
+  id bigint [pk, increment]
+  title varchar
+  subtitle varchar [null]
+  description text
+  image_url varchar [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table partners {
+  id bigint [pk, increment]
+  partner_name varchar
+  logo_url varchar
+  website_url varchar [null]
+  order_no int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table advantages {
+  id bigint [pk, increment]
+  title varchar
+  description text
+  icon varchar [null]
+  order_no int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table contacts {
+  id bigint [pk, increment]
+  company_name varchar
+  address text
+  phone varchar
+  email varchar
+  map_embed text [null]
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table footer_links {
+  id bigint [pk, increment]
+  title varchar
+  url varchar
+  order_no int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+}
