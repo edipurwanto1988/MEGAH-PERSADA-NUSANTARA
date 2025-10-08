@@ -37,15 +37,15 @@ class PostCategoryController extends Controller
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:post_categories,id',
         ]);
-
+        
         // Generate slug
         $validated['slug'] = Str::slug($validated['name']);
         
         // Set category_name for backward compatibility
         $validated['category_name'] = $validated['name'];
-
+        // unset($validated['name']);
         $category = PostCategory::create($validated);
-
+        
         // Check if request is AJAX (for modal form)
         if ($request->header('X-Requested-With') === 'XMLHttpRequest' ||
             $request->ajax() ||

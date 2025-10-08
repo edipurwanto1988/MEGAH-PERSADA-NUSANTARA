@@ -143,6 +143,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        
         return view('admin.products.show', compact('product'));
     }
 
@@ -151,6 +152,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $product = $product::with('specifications')->find($product->id);
+        // dd($product->specifications()->get());
         $categories = ProductCategory::all();
         $specifications = Specification::all();
         $product->load('specifications');
