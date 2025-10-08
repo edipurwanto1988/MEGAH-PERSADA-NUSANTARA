@@ -83,40 +83,6 @@
                             </div>
                         </div>
 
-                        <!-- Add Category Modal -->
-                        <div id="add-category-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
-                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-background-dark">
-                                <div class="mt-3">
-                                    <div class="flex items-center justify-between mb-4">
-                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Category</h3>
-                                        <button id="close-category-modal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                                            <span class="material-symbols-outlined">close</span>
-                                        </button>
-                                    </div>
-                                    <form id="add-category-form">
-                                        @csrf
-                                        <div class="mb-4">
-                                            <label for="new-category-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category Name</label>
-                                            <input type="text" id="new-category-name" name="name" required
-                                                   class="w-full px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">
-                                        </div>
-                                        <div class="mb-4">
-                                            <label for="new-category-description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
-                                            <textarea id="new-category-description" name="description" rows="3"
-                                                      class="w-full px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
-                                        </div>
-                                        <div class="flex justify-end gap-2">
-                                            <button type="button" id="cancel-add-category" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
-                                                Cancel
-                                            </button>
-                                            <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
-                                                Add Category
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
 
                         <div>
                             <label for="featured_image" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Featured Image</label>
@@ -155,6 +121,41 @@
                 </div>
             </div>
         </form>
+        
+                        <!-- Add Category Modal -->
+                        <div id="add-category-modal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+                            <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white dark:bg-background-dark">
+                                <div class="mt-3">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Category</h3>
+                                        <button id="close-category-modal" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                            <span class="material-symbols-outlined">close</span>
+                                        </button>
+                                    </div>
+                                    <form id="add-category-form">
+                                        @csrf
+                                        <div class="mb-4">
+                                            <label for="new-category-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category Name</label>
+                                            <input type="text" id="new-category-name" name="name" required
+                                                   class="w-full px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="new-category-description" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                                            <textarea id="new-category-description" name="description" rows="3"
+                                                      class="w-full px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50"></textarea>
+                                        </div>
+                                        <div class="flex justify-end gap-2">
+                                            <button type="button" id="cancel-add-category" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+                                                Cancel
+                                            </button>
+                                            <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">
+                                                Add Category
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
     </main>
 
     <!-- CKEditor Script -->
