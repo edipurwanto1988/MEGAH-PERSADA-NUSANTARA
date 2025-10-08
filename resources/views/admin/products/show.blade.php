@@ -101,10 +101,10 @@
             <div class="mt-8">
                 <h2 class="text-lg font-medium text-gray-900 mb-4">Specifications</h2>
                 
-                @if($product->specifications->count() > 0)
+                @if($product->specifications()->get()->count() > 0)
                     <div class="bg-white shadow overflow-hidden sm:rounded-md">
                         <ul class="divide-y divide-gray-200">
-                            @foreach($product->specifications as $specification)
+                            @foreach($product->specifications()->get() as $specification)
                                 <li class="px-4 py-4 sm:px-6 hover:bg-gray-50">
                                     <div class="flex items-center justify-between">
                                         <div class="flex-1">
