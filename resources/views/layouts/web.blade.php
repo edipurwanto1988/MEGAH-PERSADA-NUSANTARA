@@ -127,7 +127,7 @@
                 </div>
                 
                 <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                    <p>&copy; {{ date('Y') }} {{ $companyProfile->company_name ?? 'Mega Hjaya' }}. All rights reserved.</p>
+                    <p>&copy; {{ date('Y') }} {{ $companyProfile->company_name ?? 'Megah Persada Nusantara' }}. All rights reserved | Develop by <a href="https://jasawebpekanbaru.com/ ">Jasa pembuatan Website</a></p>
                 </div>
             </div>
         </footer>

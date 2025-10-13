@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ $title ?? config('app.name', 'Mega Hjaya') }}</title>
+        <title>{{ $title ?? config('app.name', 'Megah Persada Nusantara') }}</title>
 
         <!-- Meta Description -->
         @php
@@ -225,7 +225,7 @@
                         </div>
                     </div>
                     <div class="mt-8 border-t border-slate-200 dark:border-slate-800 pt-8 text-center text-sm text-slate-500 dark:text-slate-400">
-                        <p>© {{ date('Y') }} {{ $companyProfile->company_name ?? 'Mega Hjaya' }}. All rights reserved.</p>
+                        <p>© {{ date('Y') }} {{ $companyProfile->company_name ?? 'Megah Persada Nusantara' }}. All rights reserved | Develop by <a href="https://jasawebpekanbaru.com/ ">Jasa pembuatan Website</a></p>
                     </div>
                 </div>
             </footer>
