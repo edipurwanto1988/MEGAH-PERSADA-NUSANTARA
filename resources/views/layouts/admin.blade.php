@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Admin Panel' }} - {{ config('app.name', 'Mega Hjaya') }}</title>
+    <title>{{ $title ?? 'Admin Panel' }} - {{ config('app.name', 'Megah Persada Nusantara') }}</title>
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -78,7 +78,7 @@
                 </a>
                 
                 <!-- Master Data Dropdown -->
-                <div x-data="{ open: false }" class="relative">
+                <div x-data="{ open: false }" @click.away="open = false" class="relative">
                     <button @click="open = !open" class="w-full flex items-center px-4 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('admin.product-categories*') || request()->routeIs('admin.post-categories*') || request()->routeIs('admin.settings*') || request()->routeIs('admin.menus*') || request()->routeIs('admin.specifications*') || request()->routeIs('admin.sliders*') ? 'bg-primary/20 dark:bg-primary/30 text-primary' : 'text-gray-700 dark:text-gray-300 hover:bg-primary/20 dark:hover:bg-primary/30 hover:text-primary' }}">
                         <span class="material-symbols-outlined mr-3">database</span>
                         Master Data
@@ -89,7 +89,14 @@
                         </span>
                     </button>
                     
-                    <div x-show="open" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute left-0 mt-1 w-full rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-10">
+                    <div x-show="open"
+                         x-transition:enter="transition ease-out duration-100"
+                         x-transition:enter-start="transform opacity-0 scale-95"
+                         x-transition:enter-end="transform opacity-100 scale-100"
+                         x-transition:leave="transition ease-in duration-75"
+                         x-transition:leave-start="transform opacity-100 scale-100"
+                         x-transition:leave-end="transform opacity-0 scale-95"
+                         class="absolute left-0 top-full mt-1 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
                         <div class="py-1">
                             <a href="{{ route('admin.product-categories.index') }}" class="flex items-center px-4 py-2 text-sm font-medium rounded-lg {{ request()->routeIs('admin.product-categories*') ? 'bg-primary/20 dark:bg-primary/30 text-primary' : 'text-gray-700 dark:text-gray-300 hover:bg-primary/20 dark:hover:bg-primary/30 hover:text-primary' }}">
                                 <span class="material-symbols-outlined mr-3">category</span>

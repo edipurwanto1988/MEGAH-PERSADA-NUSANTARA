@@ -409,7 +409,8 @@
             const parentId = document.createElement('input');
             parentId.type = 'hidden';
             parentId.name = 'parent_id';
-            parentId.value = formData.get('parent_id') || '';
+            const parentValue = formData.get('parent_id');
+            parentId.value = parentValue === '' ? null : parentValue;
             form.appendChild(parentId);
             
             // Submit form

@@ -44,6 +44,11 @@ class MenuController extends Controller
             'parent_id' => 'nullable|integer|exists:menus,id',
         ]);
 
+        // Convert empty parent_id to null
+        if (isset($validated['parent_id']) && $validated['parent_id'] === '') {
+            $validated['parent_id'] = null;
+        }
+
         // Get the highest order_no for the parent
         $maxOrder = Menu::where('parent_id', $validated['parent_id'] ?? null)
             ->max('order_no') ?? 0;
@@ -79,11 +84,31 @@ class MenuController extends Controller
             'link_type' => 'required|in:page,post,product,category,custom',
             'link_id' => 'nullable|integer',
             'custom_url' => 'nullable|string|max:255',
+            'parent_id' => 'nullable|integer|exists:menus,id',
         ]);
+
+        // Convert empty parent_id to null
+        if (isset($validated['parent_id']) && $validated['parent_id'] === '') {
+            $validated['parent_id'] = null;
+        }
 
         // If custom link type, ensure custom_url is provided
         if ($validated['link_type'] === 'custom') {
             $validated['custom_url'] = $validated['custom_url'] ?? '#';
+        }
+
+        // Prevent a menu from being its own parent
+        if (isset($validated['parent_id']) && $validated['parent_id'] == $menu->id) {
+            return redirect()->route('admin.menus.index')
+                ->with('error', 'A menu item cannot be its own parent.');
+        }
+
+        // Update order_no if parent_id changed
+        if (isset($validated['parent_id']) && $validated['parent_id'] != $menu->parent_id) {
+            // Get the highest order_no for the new parent
+            $maxOrder = Menu::where('parent_id', $validated['parent_id'] ?? null)
+                ->max('order_no') ?? 0;
+            $validated['order_no'] = $maxOrder + 1;
         }
 
         $menu->update($validated);
