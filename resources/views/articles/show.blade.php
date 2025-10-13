@@ -1,4 +1,4 @@
-<x-web-layout :title="$article->title . ' - ' . $companyProfile->company_name">
+<x-web-layout :title="$article->title . ' - ' . $companyProfile->company_name" :metaDescription="$article->excerpt ? Str::limit($article->excerpt, 160) : Str::limit(strip_tags($article->content), 160)">
     <main class="flex-grow bg-white">
         <div class="font-display" style="font-family: 'Newsreader', serif;">
             <div class="container mx-auto px-6 py-12 lg:py-20">
@@ -6,9 +6,9 @@
                 <!-- Breadcrumb -->
                 <div class="mb-8">
                     <p class="text-primary font-semibold mb-2">
-                        <a class="hover:underline" href="/articles">Resources</a>
+                        <a class="hover:underline" href="/artikel">Artikel</a>
                         <span class="text-subtle-light dark:text-subtle-dark mx-2">/</span>
-                        <span>{{ $article->category_name }}</span>
+                        <span>{{ $article->title }}</span>
                     </p>
                     <h1 class="text-4xl lg:text-6xl font-extrabold leading-tight tracking-tighter mb-4">
                         {{ $article->title }}
@@ -35,7 +35,7 @@
                     <h2 class="text-3xl lg:text-4xl font-bold mb-8">Related Articles</h2>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         @foreach($relatedArticles as $related)
-                            <a class="group block" href="/articles/{{ $related->slug }}">
+                            <a class="group block" href="/artikel/{{ $related->slug }}">
                                 <div class="grid grid-cols-2 gap-4">
                                     <div class="w-full aspect-square rounded-lg overflow-hidden">
                                         @if($related->featured_image)

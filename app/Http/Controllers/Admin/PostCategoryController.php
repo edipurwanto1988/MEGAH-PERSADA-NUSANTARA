@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\PostCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostCategoryController extends Controller
 {
@@ -36,6 +37,11 @@ class PostCategoryController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:post_categories,id',
+            'seo_title' => 'nullable|string|max:255',
+            'seo_description' => 'nullable|string',
+            'seo_keywords' => 'nullable|string',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tags' => 'nullable|string',
         ]);
         
         // Generate slug
@@ -43,7 +49,16 @@ class PostCategoryController extends Controller
         
         // Set category_name for backward compatibility
         $validated['category_name'] = $validated['name'];
-        // unset($validated['name']);
+        
+        // Ensure name field is set
+        $validated['name'] = $validated['name'];
+        
+        // Handle featured image upload
+        if ($request->hasFile('featured_image')) {
+            $imagePath = $request->file('featured_image')->store('categories', 'public');
+            $validated['featured_image'] = $imagePath;
+        }
+        
         $category = PostCategory::create($validated);
         
         // Check if request is AJAX (for modal form)
@@ -55,7 +70,7 @@ class PostCategoryController extends Controller
                 'success' => true,
                 'category' => [
                     'id' => $category->id,
-                    'name' => $category->name,
+                    'name' => $category->category_name,
                     'slug' => $category->slug
                 ],
                 'message' => 'Post category created successfully.'
@@ -94,6 +109,11 @@ class PostCategoryController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:post_categories,id',
+            'seo_title' => 'nullable|string|max:255',
+            'seo_description' => 'nullable|string',
+            'seo_keywords' => 'nullable|string',
+            'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tags' => 'nullable|string',
         ]);
 
         // Generate slug if category name changed
@@ -103,12 +123,26 @@ class PostCategoryController extends Controller
         
         // Set category_name for backward compatibility
         $validated['category_name'] = $validated['name'];
+        
+        // Ensure name field is set
+        $validated['name'] = $validated['name'];
 
         // Prevent setting a category as its own parent or descendant
         if ($validated['parent_id'] == $postCategory->id) {
             return redirect()->back()
                 ->with('error', 'A category cannot be its own parent.')
                 ->withInput();
+        }
+
+        // Handle featured image upload
+        if ($request->hasFile('featured_image')) {
+            // Delete old image
+            if ($postCategory->featured_image) {
+                Storage::disk('public')->delete($postCategory->featured_image);
+            }
+            
+            $imagePath = $request->file('featured_image')->store('categories', 'public');
+            $validated['featured_image'] = $imagePath;
         }
 
         $postCategory->update($validated);
@@ -132,6 +166,11 @@ class PostCategoryController extends Controller
         if ($postCategory->posts()->count() > 0) {
             return redirect()->route('admin.post-categories.index')
                 ->with('error', 'Cannot delete a category with posts.');
+        }
+
+        // Delete featured image
+        if ($postCategory->featured_image) {
+            Storage::disk('public')->delete($postCategory->featured_image);
         }
 
         $postCategory->delete();

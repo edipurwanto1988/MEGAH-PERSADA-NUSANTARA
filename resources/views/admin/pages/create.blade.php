@@ -91,7 +91,7 @@
     </main>
 
     <!-- CKEditor Script -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/full/ckeditor.js"></script>
     <script>
         // Global function for form submission
         function handleFormSubmit(event) {
@@ -130,7 +130,19 @@
             ClassicEditor
                 .create(document.querySelector('#content'), {
                     // Ensure proper data handling
-                    initialData: document.querySelector('#content').value || ''
+                    initialData: document.querySelector('#content').value || '',
+                    // Configure toolbar with source code button
+                    toolbar: {
+                        items: [
+                            'heading', '|',
+                            'bold', 'italic', 'link', '|',
+                            'bulletedList', 'numberedList', '|',
+                            'outdent', 'indent', '|',
+                            'imageUpload', 'blockQuote', 'insertTable', '|',
+                            'undo', 'redo', '|',
+                            'sourceEditing'
+                        ]
+                    }
                 })
                 .then(editor => {
                     window.editor = editor;

@@ -139,54 +139,6 @@
                         </div>
                     </div>
 
-                    <!-- Existing Specifications -->
-                    <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">
-                        <div class="md:grid md:grid-cols-3 md:gap-6">
-                            <div class="md:col-span-1">
-                                <h3 class="text-lg font-medium leading-6 text-gray-900">Existing Specifications</h3>
-                                <p class="mt-1 text-sm text-gray-500">Current product specifications.</p>
-                            </div>
-                            <div class="mt-5 md:mt-0 md:col-span-2">
-                                <div class="space-y-3">
-                                    <!-- Debug: Show specifications count -->
-                                    <div class="text-xs text-gray-500">
-                                        Specifications count: {{ $product->specifications()->get() ? $product->specifications()->get()->count() : 'null' }}
-                                    </div>
-                                    <div class="text-xs text-gray-500">
-                                        Product ID: {{ $product->id }}
-                                    </div>
-                                    <div class="text-xs text-gray-500">
-                                        Specifications relationship: {{ $product->specifications()->get() ? 'exists' : 'null' }}
-                                    </div>
-                                    @if($product->specifications()->get())
-                                        <div class="text-xs text-gray-500">
-                                            Specifications as JSON: {{ json_encode($product->specifications()->get()) }}
-                                        </div>
-                                    @endif
-                                    
-                                    @if($product->specifications() && $product->specifications()->get()->count() > 0)
-                                        <div class="text-xs text-green-500">
-                    Showing {{ $product->specifications()->get()->count() }} specifications
-                </div>
-                                        @foreach($product->specifications()->get() as $spec)
-                                            <div class="flex items-center justify-between p-3 border border-gray-200 rounded-md">
-                                                <div class="flex-1">
-                                                    <div class="font-medium text-gray-900">{{ $spec->spec_name }}</div>
-                                                    <div class="text-sm text-gray-500">{{ $spec->pivot->spec_value }}</div>
-                                                </div>
-                                                <button type="button" onclick="deleteSpecification({{ $spec->id }})"
-                                                        class="ml-3 bg-red-600 hover:bg-red-700 text-white p-2 rounded">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <div class="text-sm text-gray-500">No specifications added yet.</div>
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- New Specifications -->
                     <div class="bg-white shadow px-4 py-5 sm:rounded-lg sm:p-6">

@@ -1,10 +1,22 @@
-<x-web-layout :title="$companyProfile->company_name . ' - Produk'">
+<x-web-layout :title="$companyProfile->company_name . ' - Produk'" :metaDescription="setting('meta_description')">
     <!-- Hero Section -->
     <section class="relative h-[40vh] min-h-[300px] bg-cover bg-center" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url("https://picsum.photos/seed/products/1920/600.jpg");'>
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="text-center">
-                <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">Produk Kami</h1>
-                <p class="text-xl text-white/90">Temukan produk berkualitas tinggi untuk kebutuhan Anda</p>
+                <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">
+                    @if(isset($category))
+                        {{ $category->name }}
+                    @else
+                        Produk Kami
+                    @endif
+                </h1>
+                <p class="text-xl text-white/90">
+                    @if(isset($category))
+                        Temukan produk berkualitas tinggi kategori {{ $category->name }}
+                    @else
+                        Temukan produk berkualitas tinggi untuk kebutuhan Anda
+                    @endif
+                </p>
             </div>
         </div>
     </section>
@@ -17,9 +29,9 @@
                 @if($categories->count() > 0)
                 <div class="mb-8">
                     <div class="flex flex-wrap gap-2 justify-center">
-                        <a href="/products" class="px-4 py-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors">Semua</a>
-                        @foreach($categories as $category)
-                            <a href="/products/category/{{ $category->slug }}" class="px-4 py-2 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">{{ $category->name }}</a>
+                        <a href="/products" class="px-4 py-2 rounded-full @if(!isset($category)) bg-primary text-white @else bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 @endif hover:bg-primary/90 transition-colors">Semua</a>
+                        @foreach($categories as $cat)
+                            <a href="/products/category/{{ $cat->slug }}" class="px-4 py-2 rounded-full @if(isset($category) && $category->id === $cat->id) bg-primary text-white @else bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 @endif hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">{{ $cat->name }}</a>
                         @endforeach
                     </div>
                 </div>

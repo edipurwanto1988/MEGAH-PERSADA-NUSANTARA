@@ -29,7 +29,13 @@ class SettingController extends Controller
         $validated = $request->validate([
             'site_name' => 'required|string|max:255',
             'site_description' => 'nullable|string',
-            'site_keywords' => 'nullable|string',
+            'site_email' => 'nullable|email|max:255',
+            'site_phone' => 'nullable|string|max:20',
+            'site_address' => 'nullable|string',
+            'whatsapp' => 'nullable|string|max:20',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string',
             'site_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'site_favicon' => 'nullable|image|mimes:ico,png,jpg,gif|max:1024',
             'contact_email' => 'nullable|email|max:255',
@@ -43,22 +49,30 @@ class SettingController extends Controller
             'google_analytics' => 'nullable|string',
             'google_recaptcha_site_key' => 'nullable|string',
             'google_recaptcha_secret_key' => 'nullable|string',
+            'company_name' => 'nullable|string|max:255',
+            'company_description' => 'nullable|string',
+            'company_logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'company_vision' => 'nullable|string',
+            'company_mission' => 'nullable|string',
         ]);
         
         // Update settings
         foreach ($validated as $key => $value) {
+            // Special handling for whatsapp field to save with correct database key
+            $dbKey = $key === 'whatsapp' ? 'whatshapp' : $key;
+            
             if ($request->hasFile($key)) {
                 // Handle file uploads
-                $setting = Setting::where('key', $key)->first();
+                $setting = Setting::where('key', $dbKey)->first();
                 if ($setting && $setting->value) {
                     Storage::disk('public')->delete($setting->value);
                 }
                 
                 $path = $request->file($key)->store('settings', 'public');
-                Setting::updateOrCreate(['key' => $key], ['value' => $path]);
+                Setting::updateOrCreate(['key' => $dbKey], ['value' => $path]);
             } else {
                 // Handle text values
-                Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+                Setting::updateOrCreate(['key' => $dbKey], ['value' => $value]);
             }
         }
         

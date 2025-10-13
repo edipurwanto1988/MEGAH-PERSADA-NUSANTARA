@@ -14,7 +14,9 @@ use App\Models\CompanyProfile;
 use App\Models\Contact;
 use App\Models\Menu;
 use App\Models\FooterLink;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -35,16 +37,21 @@ class HomeController extends Controller
         $advantages = Advantage::orderBy('order_no')->get();
         $menus = Menu::orderBy('order_no')->get();
         
+        // Get meta description, site email, and site address from settings
+        $metaDescription = setting('meta_description');
+        $siteEmail = setting('site_email');
+        $siteAddress = setting('site_address');
+        
         // Debug logs for products
-        \Log::info('Total products found: ' . $products->count());
+        Log::info('Total products found: ' . $products->count());
         foreach ($products as $product) {
-            \Log::info('Product ID: ' . $product->id . ', Name: ' . $product->product_name . ', Images count: ' . $product->images->count());
+            Log::info('Product ID: ' . $product->id . ', Name: ' . $product->product_name . ', Images count: ' . $product->images->count());
             if ($product->images->count() > 0) {
-                \Log::info('First image URL: ' . $product->images->first()->image_url);
+                Log::info('First image URL: ' . $product->images->first()->image_url);
             }
         }
         
-        return view('home', compact('sliders', 'products', 'posts', 'partners', 'companyProfile', 'advantages', 'menus'));
+        return view('home', compact('sliders', 'products', 'posts', 'partners', 'companyProfile', 'advantages', 'menus', 'metaDescription', 'siteEmail', 'siteAddress'));
     }
     
     /**

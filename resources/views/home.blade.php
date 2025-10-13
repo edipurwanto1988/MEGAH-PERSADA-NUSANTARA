@@ -1,4 +1,4 @@
-<x-web-layout :title="$companyProfile->company_name . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')">
+<x-web-layout :title="$companyProfile->company_name . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')" :metaDescription="$metaDescription">
     <!-- Hero Section with Slider -->
     <section id="home" class="relative w-full h-[75vh] min-h-[500px] max-h-[800px] bg-cover bg-center lg:h-[70vh]" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJRhYoD_u1sr5X8kgnecgw2qi_DVjVTGDDa5zB37cL4-ECRw2qvyph7eGMdM6li36oI8zPWlnEcRQYpR5IhlcEDFbjfz87jKzHp7L75OROr6H9f0gPkJ_08bS_rCrxYm9ZxpVJSa13zi3dN7lcgLXyRh0SKXI36Q0vJNv7MflMu1LA3HhLi1RasDM7JbcdwtM1j7XmBHPAZnazGaVGSLdEu9MksygUwmoVKHgesiglOCT7CYOPDNSuJDoFb33laP4qEpLibt3Yr8ah");'>
         <div class="absolute inset-x-0 bottom-4 flex justify-center gap-2">
@@ -100,7 +100,7 @@
                                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $post->title }}</h3>
                                     <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ $post->excerpt ? Str::limit($post->excerpt, 100) : Str::limit(strip_tags($post->content), 100) }}</p>
                                     <div class="mt-4">
-                                        <a href="/articles/{{ $post->slug }}" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Baca Selengkapnya</a>
+                                        <a href="/artikel/{{ $post->slug }}" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Baca Selengkapnya</a>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +108,7 @@
                     @endforeach
                 </div>
                 <div class="text-center mt-8">
-                    <a class="inline-block px-8 py-3 text-lg font-bold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors" href="/articles">Lihat Semua Artikel</a>
+                    <a class="inline-block px-8 py-3 text-lg font-bold text-white bg-primary rounded-lg hover:bg-primary/90 transition-colors" href="/artikel">Lihat Semua Artikel</a>
                 </div>
             </div>
         </div>
@@ -156,7 +156,7 @@
                                 <span class="material-symbols-outlined text-primary mt-1">location_on</span>
                                 <div>
                                     <h4 class="font-semibold text-slate-800 dark:text-slate-200">Alamat</h4>
-                                    <p class="text-slate-600 dark:text-slate-400">{{ $companyProfile->address }}</p>
+                                    <p class="text-slate-600 dark:text-slate-400">{{ $siteAddress ?? $companyProfile->address }}</p>
                                 </div>
                             </div>
                             <div class="flex items-start gap-4">
@@ -170,7 +170,7 @@
                                 <span class="material-symbols-outlined text-primary mt-1">email</span>
                                 <div>
                                     <h4 class="font-semibold text-slate-800 dark:text-slate-200">Email</h4>
-                                    <p class="text-slate-600 dark:text-slate-400">{{ $companyProfile->email }}</p>
+                                    <p class="text-slate-600 dark:text-slate-400">{{ $siteEmail ?? $companyProfile->email }}</p>
                                 </div>
                             </div>
                         </div>

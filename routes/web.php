@@ -21,11 +21,13 @@ Route::get('/', [HomeController::class, 'index']);
 
 // Product routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+Route::get('/products/category/{slug}', [ProductController::class, 'byCategory'])->name('products.category');
+Route::get('/products/{slug}', [ProductController::class, 'show'])->name('products.show');
 
 // Article routes
-Route::get('/articles', [ArticleController::class, 'index'])->name('articles.index');
-Route::get('/articles/{slug}', [ArticleController::class, 'show'])->name('articles.show');
+Route::get('/artikel', [ArticleController::class, 'index'])->name('articles.index');
+Route::get('/artikel/category/{slug}', [ArticleController::class, 'byCategory'])->name('articles.category');
+Route::get('/artikel/{slug}', [ArticleController::class, 'show'])->name('articles.show');
 
 // Page routes
 Route::get('/pages/{slug}', [App\Http\Controllers\PageController::class, 'show'])->name('pages.show');
