@@ -8,6 +8,7 @@ use App\Models\Contact;
 use App\Models\User;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -50,6 +51,7 @@ class AdminController extends Controller
             'site_email' => 'nullable|email|max:255',
             'site_phone' => 'nullable|string|max:20',
             'site_address' => 'nullable|string',
+            'whatsapp' => 'nullable|string|max:20',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
@@ -73,18 +75,21 @@ class AdminController extends Controller
             
             // Check if this field is allowed to be saved
             if (array_key_exists($key, $rules)) {
+                // Special handling for whatsapp field to save with correct database key
+                $dbKey = $key === 'whatsapp' ? 'whatshapp' : $key;
+                
                 if ($request->hasFile($key)) {
                     // Handle file uploads
-                    $setting = Setting::where('key', $key)->first();
+                    $setting = Setting::where('key', $dbKey)->first();
                     if ($setting && $setting->value) {
-                        \Storage::disk('public')->delete($setting->value);
+                        Storage::disk('public')->delete($setting->value);
                     }
                     
                     $path = $request->file($key)->store('settings', 'public');
-                    Setting::updateOrCreate(['key' => $key], ['value' => $path]);
+                    Setting::updateOrCreate(['key' => $dbKey], ['value' => $path]);
                 } else {
                     // Handle text values
-                    Setting::updateOrCreate(['key' => $key], ['value' => $value]);
+                    Setting::updateOrCreate(['key' => $dbKey], ['value' => $value]);
                 }
             }
         }

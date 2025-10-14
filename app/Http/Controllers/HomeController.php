@@ -37,10 +37,11 @@ class HomeController extends Controller
         $advantages = Advantage::orderBy('order_no')->get();
         $menus = Menu::orderBy('order_no')->get();
         
-        // Get meta description, site email, and site address from settings
+        // Get meta description, site email, site address, and company name from settings
         $metaDescription = setting('meta_description');
         $siteEmail = setting('site_email');
         $siteAddress = setting('site_address');
+        $companyName = setting('company_name');
         
         // Debug logs for products
         Log::info('Total products found: ' . $products->count());
@@ -51,7 +52,7 @@ class HomeController extends Controller
             }
         }
         
-        return view('home', compact('sliders', 'products', 'posts', 'partners', 'companyProfile', 'advantages', 'menus', 'metaDescription', 'siteEmail', 'siteAddress'));
+        return view('home', compact('sliders', 'products', 'posts', 'partners', 'companyProfile', 'advantages', 'menus', 'metaDescription', 'siteEmail', 'siteAddress', 'companyName'));
     }
     
     /**

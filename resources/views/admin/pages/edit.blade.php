@@ -26,7 +26,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.pages.update', $page) }}" method="POST" enctype="multipart/form-data" id="page-form" onsubmit="return handleFormSubmit(event)">
+        <form action="{{ route('admin.pages.update', $page) }}" method="POST" enctype="multipart/form-data" id="page-form">
             @csrf
             @method('PUT')
             <div class="space-y-6">
@@ -96,27 +96,27 @@
                     </div>
                 </div>
 
-                <div class="flex justify-between">
-                    <div class="flex items-center gap-4">
-                        <form action="{{ route('admin.pages.destroy', $page) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this page? This action cannot be undone.')" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="px-6 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Delete Page
-                            </button>
-                        </form>
-                    </div>
-                    <div class="flex gap-4">
-                        <a href="{{ route('admin.pages.show', $page) }}" class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
-                            Cancel
-                        </a>
-                        <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                            Update Page
-                        </button>
-                    </div>
+                <div class="flex justify-end gap-4">
+                    <a href="{{ route('admin.pages.show', $page) }}" class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                        Cancel
+                    </a>
+                    <button type="button" class="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" onclick="return handleFormSubmit(event)">
+                        Update Page
+                    </button>
                 </div>
             </div>
         </form>
+        
+        <!-- Delete Form - Outside the main form to avoid nesting -->
+        <div class="mt-6">
+            <form action="{{ route('admin.pages.destroy', $page) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this page? This action cannot be undone.')" id="delete-form">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-6 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Delete Page
+                </button>
+            </form>
+        </div>
     </main>
 
     <!-- CKEditor Script -->
@@ -124,7 +124,7 @@
     <script>
         // Global function for form submission
         function handleFormSubmit(event) {
-            console.log('Form submitted');
+            console.log('Update button clicked');
             
             // Sync CKEditor content to textarea
             if (window.editor) {
@@ -133,16 +133,9 @@
                 console.log('CKEditor content synced:', editorData);
             }
             
-            const formData = new FormData(event.target);
-            console.log('Form data:');
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ':', pair[1]);
-            }
-            
             // Check if content is empty
             const content = document.getElementById('content').value;
             if (!content || content.trim() === '' || content.trim() === '<p>&nbsp;</p>' || content.trim() === '<p></p>') {
-                event.preventDefault();
                 alert('Content is required. Please add content to your page.');
                 if (window.editor) {
                     window.editor.editing.view.focus();
@@ -150,6 +143,8 @@
                 return false;
             }
             
+            // Submit the form programmatically
+            document.getElementById('page-form').submit();
             return true;
         }
         
@@ -180,7 +175,8 @@
                 const slug = title.toLowerCase()
                     .replace(/[^\w\s-]/g, '') // Remove special characters
                     .replace(/\s+/g, '-') // Replace spaces with hyphens
-                    .replace(/-+/g, '-'); // Replace multiple hyphens with single hyphen
+                    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+                    .replace(/^-+|-+$/g, ''); // Remove hyphens from beginning and end
                 
                 document.getElementById('slug').value = slug;
             });

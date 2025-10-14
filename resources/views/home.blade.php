@@ -1,11 +1,63 @@
-<x-web-layout :title="$companyProfile->company_name . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')" :metaDescription="$metaDescription">
+<x-web-layout :title="($companyName ?? $companyProfile->company_name) . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')" :metaDescription="$metaDescription">
     <!-- Hero Section with Slider -->
-    <section id="home" class="relative w-full h-[75vh] min-h-[500px] max-h-[800px] bg-cover bg-center lg:h-[70vh]" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDJRhYoD_u1sr5X8kgnecgw2qi_DVjVTGDDa5zB37cL4-ECRw2qvyph7eGMdM6li36oI8zPWlnEcRQYpR5IhlcEDFbjfz87jKzHp7L75OROr6H9f0gPkJ_08bS_rCrxYm9ZxpVJSa13zi3dN7lcgLXyRh0SKXI36Q0vJNv7MflMu1LA3HhLi1RasDM7JbcdwtM1j7XmBHPAZnazGaVGSLdEu9MksygUwmoVKHgesiglOCT7CYOPDNSuJDoFb33laP4qEpLibt3Yr8ah");'>
-        <div class="absolute inset-x-0 bottom-4 flex justify-center gap-2">
-            @foreach($sliders as $index => $slider)
-                <span class="block h-2 w-2 rounded-full {{ $index === 0 ? 'bg-white' : 'bg-white/50' }}"></span>
-            @endforeach
-        </div>
+    <section id="home" class="relative w-full h-[75vh] min-h-[500px] max-h-[800px] overflow-hidden lg:h-[70vh]">
+        @if($sliders && $sliders->count() > 0)
+            <!-- Slider Container -->
+            <div class="relative w-full h-full">
+                @foreach($sliders as $index => $slider)
+                    <div class="slider-slide absolute inset-0 w-full h-full transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}" data-slide="{{ $index }}">
+                        <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('{{ asset('storage/' . $slider->image_url) }}');">
+                            @if($slider->title || $slider->subtitle)
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="text-center text-white px-4">
+                                        @if($slider->title)
+                                            <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ $slider->title }}</h1>
+                                        @endif
+                                        @if($slider->subtitle)
+                                            <p class="text-xl md:text-2xl">{{ $slider->subtitle }}</p>
+                                        @endif
+                                        @if($slider->button_text && $slider->button_link)
+                                            <a href="{{ $slider->button_link }}" class="mt-8 inline-block bg-primary text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors">
+                                                {{ $slider->button_text }}
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+            
+            <!-- Slider Indicators -->
+            <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
+                @foreach($sliders as $index => $slider)
+                    <button class="slider-indicator block h-3 w-3 rounded-full {{ $index === 0 ? 'bg-white' : 'bg-white/50' }} transition-colors" data-slide="{{ $index }}"></button>
+                @endforeach
+            </div>
+            
+            <!-- Slider Navigation -->
+            <button id="slider-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button id="slider-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+        @else
+            <!-- Fallback Hero Section if no sliders -->
+            <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('https://picsum.photos/seed/hero/1920/1080.jpg');">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="text-center text-white px-4">
+                        <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('company_name', $companyProfile->company_name ?? 'Welcome') }}</h1>
+                        <p class="text-xl md:text-2xl">{{ $companyProfile->description ?? 'Discover our amazing products' }}</p>
+                    </div>
+                </div>
+            </div>
+        @endif
     </section>
 
     <!-- About Section -->
@@ -200,6 +252,62 @@
     <!-- Slider Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Hero Slider
+            const slides = document.querySelectorAll('.slider-slide');
+            const indicators = document.querySelectorAll('.slider-indicator');
+            const prevBtn = document.getElementById('slider-prev');
+            const nextBtn = document.getElementById('slider-next');
+            
+            if (slides.length > 0) {
+                let currentSlide = 0;
+                
+                function showSlide(index) {
+                    // Hide all slides
+                    slides.forEach((slide, i) => {
+                        slide.classList.remove('opacity-100');
+                        slide.classList.add('opacity-0');
+                    });
+                    
+                    // Update indicators
+                    indicators.forEach((indicator, i) => {
+                        indicator.classList.remove('bg-white');
+                        indicator.classList.add('bg-white/50');
+                    });
+                    
+                    // Show current slide
+                    slides[index].classList.remove('opacity-0');
+                    slides[index].classList.add('opacity-100');
+                    indicators[index].classList.remove('bg-white/50');
+                    indicators[index].classList.add('bg-white');
+                    
+                    currentSlide = index;
+                }
+                
+                // Next slide
+                function nextSlide() {
+                    const newSlide = (currentSlide + 1) % slides.length;
+                    showSlide(newSlide);
+                }
+                
+                // Previous slide
+                function prevSlide() {
+                    const newSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(newSlide);
+                }
+                
+                // Event listeners for navigation buttons
+                if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+                if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+                
+                // Event listeners for indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => showSlide(index));
+                });
+                
+                // Auto-play slider
+                setInterval(nextSlide, 5000);
+            }
+            
             // Product Slider
             const productSlider = document.getElementById('product-slider');
             const productPrev = document.getElementById('product-prev');
