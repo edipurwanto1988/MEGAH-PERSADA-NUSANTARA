@@ -7,31 +7,7 @@
                 @foreach($sliders as $index => $slider)
                     <div class="slider-slide absolute inset-0 w-full h-full transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}" data-slide="{{ $index }}">
                         <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('{{ asset('storage/' . $slider->image_url) }}');">
-                            @if($slider->title || $slider->subtitle)
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="text-center text-white px-4">
-                                        @if($slider->title)
-                                            <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ $slider->title }}</h1>
-                                        @endif
-                                        @if($slider->subtitle)
-                                            <p class="text-xl md:text-2xl">{{ $slider->subtitle }}</p>
-                                        @endif
-                                        @if($slider->button_text && $slider->button_link)
-                                            <a href="{{ $slider->button_link }}" class="mt-8 inline-block bg-primary text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary/90 transition-colors">
-                                                {{ $slider->button_text }}
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-                            @else
-                                <!-- Debug: Show slider data when title/subtitle is empty -->
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="text-center text-white px-4">
-                                        <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('company_name', $companyProfile->company_name ?? 'Welcome') }}</h1>
-                                        <p class="text-xl md:text-2xl">{{ $companyProfile->description ?? 'Discover our amazing products' }}</p>
-                                    </div>
-                                </div>
-                            @endif
+                         
                         </div>
                     </div>
                 @endforeach
