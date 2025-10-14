@@ -78,6 +78,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Specification routes
     Route::resource('specifications', SpecificationController::class);
+    Route::post('/specifications/check-or-create', [SpecificationController::class, 'checkOrCreate'])->name('specifications.check-or-create');
     
     // Partner routes
     Route::resource('partners', PartnerController::class);

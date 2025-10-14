@@ -146,6 +146,9 @@
                             <div class="md:col-span-1">
                                 <h3 class="text-lg font-medium leading-6 text-gray-900">New Specifications</h3>
                                 <p class="mt-1 text-sm text-gray-500">Add new product specifications with their values.</p>
+                                <button type="button" id="json-spec-helper" class="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded text-sm">
+                                    <i class="fas fa-code mr-2"></i>JSON Helper
+                                </button>
                             </div>
                             <div class="mt-5 md:mt-0 md:col-span-2">
                                 <div id="specifications-container" class="space-y-3">
@@ -436,5 +439,123 @@
                 addSpecification();
             }
         });
+
+        // JSON Helper Modal
+        document.getElementById('json-spec-helper').addEventListener('click', function() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50';
+            modal.innerHTML = `
+                <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+                    <div class="mt-3">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">JSON Specification Helper</h3>
+                        <p class="text-sm text-gray-600 mb-4">Enter specifications in JSON format. Example:</p>
+                        <pre class="bg-gray-100 p-3 rounded text-sm mb-4">{
+  "Air_circulation": "70%",
+  "Air_exhaust": "30%",
+  "Door_operation": "Manual",
+  "ULPA_Filter": "99.9995% Efficient at 0.3 uL",
+  "HEPA_Filter": "99.995% Efficient at 0.3 uL"
+}</pre>
+                        <textarea id="json-spec-input" rows="10" placeholder="Enter JSON here..."
+                                  class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        <div class="flex justify-end space-x-2 mt-4">
+                            <button type="button" onclick="closeJsonModal()"
+                                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">
+                                Cancel
+                            </button>
+                            <button type="button" onclick="processJsonSpecs()"
+                                    class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Process
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+        });
+
+        window.closeJsonModal = function() {
+            const modal = document.querySelector('.fixed.inset-0');
+            if (modal) {
+                modal.remove();
+            }
+        };
+
+        window.processJsonSpecs = function() {
+            const jsonInput = document.getElementById('json-spec-input').value;
+            
+            try {
+                const specs = JSON.parse(jsonInput);
+                
+                // Clear existing specifications
+                specificationsContainer.innerHTML = '';
+                specificationIndex = 0;
+                
+                // Process each specification
+                Object.keys(specs).forEach(async (specName) => {
+                    const specValue = specs[specName];
+                    
+                    // Check if specification exists
+                    const response = await fetch(`/admin/specifications/check-or-create`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            spec_name: specName
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Add specification to the form
+                        const div = document.createElement('div');
+                        div.className = 'flex gap-3 items-center specification-row';
+                        
+                        div.innerHTML = `
+                            <select name="specifications[${specificationIndex}][specification_id]" required
+                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                                <option value="${data.specification_id}" selected>${specName}</option>
+                            </select>
+                            <input type="text" name="specifications[${specificationIndex}][spec_value]"
+                                   value="${specValue}"
+                                   placeholder="Specification value" required
+                                   class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                            <button type="button" onclick="saveSpecification(this, ${specificationIndex})"
+                                    class="bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded">
+                                <i class="fas fa-save"></i>
+                            </button>
+                            <button type="button" onclick="removeSpecification(this)"
+                                    class="bg-red-600 hover:bg-red-700 text-white py-2 px-3 rounded">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        `;
+                        
+                        specificationsContainer.appendChild(div);
+                        specificationIndex++;
+                    }
+                });
+                
+                // Close modal
+                closeJsonModal();
+                
+                // Show success message
+                const successDiv = document.createElement('div');
+                successDiv.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-2';
+                successDiv.textContent = 'Specifications added successfully. Please save them individually.';
+                document.querySelector('.md\\:grid.md\\:grid-cols-3.md\\:gap-6').appendChild(successDiv);
+                
+                // Remove success message after 5 seconds
+                setTimeout(() => {
+                    successDiv.remove();
+                }, 5000);
+                
+            } catch (error) {
+                alert('Invalid JSON format. Please check your input and try again.');
+                console.error('JSON parsing error:', error);
+            }
+        };
     </script>
 </x-admin-layout>

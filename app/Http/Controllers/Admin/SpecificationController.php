@@ -99,4 +99,37 @@ class SpecificationController extends Controller
         return redirect()->route('admin.specifications.index')
             ->with('success', 'Specification deleted successfully.');
     }
+
+    /**
+     * Check if specification exists or create a new one
+     */
+    public function checkOrCreate(Request $request)
+    {
+        $validated = $request->validate([
+            'spec_name' => 'required|string|max:255',
+        ]);
+
+        // Check if specification already exists
+        $specification = Specification::where('spec_name', $validated['spec_name'])->first();
+
+        if ($specification) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Specification already exists',
+                'specification_id' => $specification->id
+            ]);
+        }
+
+        // Create new specification
+        $specification = Specification::create([
+            'spec_name' => $validated['spec_name'],
+            'description' => null
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Specification created successfully',
+            'specification_id' => $specification->id
+        ]);
+    }
 }

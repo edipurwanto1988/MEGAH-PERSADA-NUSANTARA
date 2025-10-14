@@ -97,7 +97,7 @@
     <script>
         // Global function for form submission
         function handleFormSubmit(event) {
-            console.log('Form submitted');
+            console.log('Create button clicked');
             
             // Sync CKEditor content to textarea
             if (window.editor) {
@@ -106,7 +106,9 @@
                 console.log('CKEditor content synced:', editorData);
             }
             
-            const formData = new FormData(event.target);
+            // Get the form element
+            const form = document.getElementById('page-form');
+            const formData = new FormData(form);
             console.log('Form data:');
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ':', pair[1]);
@@ -115,7 +117,6 @@
             // Check if content is empty
             const content = document.getElementById('content').value;
             if (!content || content.trim() === '' || content.trim() === '<p>&nbsp;</p>' || content.trim() === '<p></p>') {
-                event.preventDefault();
                 alert('Content is required. Please add content to your page.');
                 if (window.editor) {
                     window.editor.editing.view.focus();
@@ -123,6 +124,8 @@
                 return false;
             }
             
+            // Submit the form
+            form.submit();
             return true;
         }
         
