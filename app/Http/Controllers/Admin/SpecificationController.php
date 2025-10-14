@@ -20,6 +20,7 @@ class SpecificationController extends Controller
                 return $query->where('spec_name', 'like', "%{$search}%")
                             ->orWhere('description', 'like', "%{$search}%");
             })
+            ->orderBy('spec_name', 'asc')
             ->paginate(10)
             ->withQueryString();
             

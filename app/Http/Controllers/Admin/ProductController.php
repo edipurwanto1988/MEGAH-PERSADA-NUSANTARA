@@ -68,7 +68,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategory::all();
-        $specifications = Specification::all();
+        $specifications = Specification::orderBy('spec_name', 'asc')->get();
         return view('admin.products.create', compact('categories', 'specifications'));
     }
 
@@ -155,7 +155,7 @@ class ProductController extends Controller
         $product = $product::with('specifications')->find($product->id);
         // dd($product->specifications()->get());
         $categories = ProductCategory::all();
-        $specifications = Specification::all();
+        $specifications = Specification::orderBy('spec_name', 'asc')->get();
         $product->load('specifications');
         
         // Debug: Log product specifications

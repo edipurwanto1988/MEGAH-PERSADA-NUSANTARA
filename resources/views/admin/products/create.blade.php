@@ -71,7 +71,7 @@
 
                             <div class="col-span-6">
                                 <label for="external_link" class="block text-sm font-medium text-gray-700">External Link</label>
-                                <input type="url" name="external_link" id="external_link" value="{{ old('external_link') }}"
+                                <input type="url" name="external_link" id="external_link" value="{{ old('external_link', '') }}"
                                        placeholder="https://example.com"
                                        class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <p class="mt-2 text-sm text-gray-500">Optional external link for this product</p>

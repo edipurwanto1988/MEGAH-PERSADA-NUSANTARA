@@ -93,11 +93,11 @@
     </main>
 
     <!-- CKEditor Script -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js?v={{ time() }}"></script>
     <script>
         // Global function for form submission
         function handleFormSubmit(event) {
-            console.log('Create button clicked');
+            console.log('Create button clicked - v2');
             
             // Sync CKEditor content to textarea
             if (window.editor) {
@@ -108,10 +108,9 @@
             
             // Get the form element
             const form = document.getElementById('page-form');
-            const formData = new FormData(form);
-            console.log('Form data:');
-            for (let pair of formData.entries()) {
-                console.log(pair[0] + ':', pair[1]);
+            if (!form) {
+                console.error('Form not found');
+                return false;
             }
             
             // Check if content is empty

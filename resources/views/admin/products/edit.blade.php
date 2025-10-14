@@ -487,9 +487,18 @@
             try {
                 const specs = JSON.parse(jsonInput);
                 
+                // Get the specifications container and reset index
+                const specsContainer = document.getElementById('specifications-container');
+                if (!specsContainer) {
+                    alert('Error: Specifications container not found');
+                    return;
+                }
+                
                 // Clear existing specifications
-                specificationsContainer.innerHTML = '';
-                specificationIndex = 0;
+                specsContainer.innerHTML = '';
+                
+                // Reset specification index
+                let specIndex = 0;
                 
                 // Process each specification
                 Object.keys(specs).forEach(async (specName) => {
@@ -515,15 +524,15 @@
                         div.className = 'flex gap-3 items-center specification-row';
                         
                         div.innerHTML = `
-                            <select name="specifications[${specificationIndex}][specification_id]" required
+                            <select name="specifications[${specIndex}][specification_id]" required
                                     class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                                 <option value="${data.specification_id}" selected>${specName}</option>
                             </select>
-                            <input type="text" name="specifications[${specificationIndex}][spec_value]"
+                            <input type="text" name="specifications[${specIndex}][spec_value]"
                                    value="${specValue}"
                                    placeholder="Specification value" required
                                    class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
-                            <button type="button" onclick="saveSpecification(this, ${specificationIndex})"
+                            <button type="button" onclick="saveSpecification(this, ${specIndex})"
                                     class="bg-green-600 hover:bg-green-700 text-white py-2 px-3 rounded">
                                 <i class="fas fa-save"></i>
                             </button>
@@ -533,8 +542,8 @@
                             </button>
                         `;
                         
-                        specificationsContainer.appendChild(div);
-                        specificationIndex++;
+                        specsContainer.appendChild(div);
+                        specIndex++;
                     }
                 });
                 
@@ -545,7 +554,7 @@
                 const successDiv = document.createElement('div');
                 successDiv.className = 'bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-2';
                 successDiv.textContent = 'Specifications added successfully. Please save them individually.';
-                document.querySelector('.md\\:grid.md\\:grid-cols-3.md\\:gap-6').appendChild(successDiv);
+                document.querySelector('.bg-white.shadow.px-4.py-5.sm\\:rounded-lg.sm\\:p-6').appendChild(successDiv);
                 
                 // Remove success message after 5 seconds
                 setTimeout(() => {
