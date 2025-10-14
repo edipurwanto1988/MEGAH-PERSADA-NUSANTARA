@@ -70,11 +70,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Menu routes
     Route::get('/menus', [App\Http\Controllers\Admin\MenuController::class, 'index'])->name('menus.index');
     Route::post('/menus', [App\Http\Controllers\Admin\MenuController::class, 'store'])->name('menus.store');
+    Route::put('/menus/order', [App\Http\Controllers\Admin\MenuController::class, 'updateOrder'])->name('menus.order.update');
+    Route::get('/menus/link-items/{linkType}', [App\Http\Controllers\Admin\MenuController::class, 'getLinkItems'])->name('menus.link-items');
     Route::get('/menus/{menu}/edit', [App\Http\Controllers\Admin\MenuController::class, 'edit'])->name('menus.edit');
     Route::put('/menus/{menu}', [App\Http\Controllers\Admin\MenuController::class, 'update'])->name('menus.update');
     Route::delete('/menus/{menu}', [App\Http\Controllers\Admin\MenuController::class, 'destroy'])->name('menus.destroy');
-    Route::put('/menus/order', [App\Http\Controllers\Admin\MenuController::class, 'updateOrder'])->name('menus.order.update');
-    Route::get('/menus/link-items/{linkType}', [App\Http\Controllers\Admin\MenuController::class, 'getLinkItems'])->name('menus.link-items');
     
     // Specification routes
     Route::resource('specifications', SpecificationController::class);

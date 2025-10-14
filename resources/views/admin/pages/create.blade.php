@@ -18,7 +18,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.pages.store') }}" method="POST" enctype="multipart/form-data" id="page-form" onsubmit="return handleFormSubmit(event)">
+        <form action="{{ route('admin.pages.store') }}" method="POST" enctype="multipart/form-data" id="page-form">
             @csrf
             <div class="space-y-6">
                 <div class="bg-white dark:bg-background-dark shadow rounded-lg">
@@ -42,8 +42,10 @@
 
                         <div>
                             <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Content</label>
-                            <textarea name="content" id="content" rows="10"
-                                      class="w-full px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">{{ old('content') }}</textarea>
+                            <div class="ckeditor-container">
+                                <textarea name="content" id="content" rows="10"
+                                          class="w-full px-4 py-2 rounded-lg bg-white dark:bg-background-dark border border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/50">{{ old('content') }}</textarea>
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -82,7 +84,7 @@
                     <a href="{{ route('admin.pages.index') }}" class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                         Cancel
                     </a>
-                    <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    <button type="button" class="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" onclick="return handleFormSubmit(event)">
                         Create Page
                     </button>
                 </div>
@@ -91,7 +93,7 @@
     </main>
 
     <!-- CKEditor Script -->
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/full/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.0/classic/ckeditor.js"></script>
     <script>
         // Global function for form submission
         function handleFormSubmit(event) {
@@ -127,35 +129,58 @@
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Page loaded and DOM ready');
             
-            ClassicEditor
-                .create(document.querySelector('#content'), {
-                    // Ensure proper data handling
-                    initialData: document.querySelector('#content').value || '',
-                    // Configure toolbar with source code button
-                    toolbar: {
-                        items: [
-                            'heading', '|',
-                            'bold', 'italic', 'link', '|',
-                            'bulletedList', 'numberedList', '|',
-                            'outdent', 'indent', '|',
-                            'imageUpload', 'blockQuote', 'insertTable', '|',
-                            'undo', 'redo', '|',
-                            'sourceEditing'
-                        ]
-                    }
-                })
-                .then(editor => {
-                    window.editor = editor;
+            // Initialize CKEditor with a delay to ensure DOM is fully loaded
+            setTimeout(() => {
+                const contentTextarea = document.querySelector('#content');
+                if (contentTextarea) {
+                    // Hide the original textarea
+                    contentTextarea.style.display = 'none';
                     
-                    // Update the textarea when editor data changes
-                    editor.model.document.on('change:data', () => {
-                        const data = editor.getData();
-                        document.querySelector('#content').value = data;
-                    });
-                })
-                .catch(error => {
-                    console.error('CKEditor initialization error:', error);
-                });
+                    ClassicEditor
+                        .create(contentTextarea, {
+                            // Ensure proper data handling
+                            initialData: contentTextarea.value || '',
+                            // Configure toolbar with source code button
+                            toolbar: {
+                                items: [
+                                    'heading', '|',
+                                    'bold', 'italic', 'underline', 'link', '|',
+                                    'bulletedList', 'numberedList', '|',
+                                    'outdent', 'indent', '|',
+                                    'imageUpload', 'blockQuote', 'insertTable', '|',
+                                    'undo', 'redo', '|',
+                                    'sourceEditing'
+                                ]
+                            },
+                            // Other configuration options
+                            height: '300px',
+                            // Ensure the editor is visible
+                            viewportTopOffset: 50
+                        })
+                        .then(editor => {
+                            window.editor = editor;
+                            console.log('CKEditor initialized successfully');
+                            
+                            // Update the textarea when editor data changes
+                            editor.model.document.on('change:data', () => {
+                                const data = editor.getData();
+                                contentTextarea.value = data;
+                            });
+                            
+                            // Make the editor visible
+                            editor.editing.view.change(writer => {
+                                writer.setAttribute('style', 'display: block; height: 300px;', editor.editing.view.document.getRoot());
+                            });
+                        })
+                        .catch(error => {
+                            console.error('CKEditor initialization error:', error);
+                            // Show the original textarea if CKEditor fails
+                            contentTextarea.style.display = 'block';
+                        });
+                } else {
+                    console.error('Content textarea not found');
+                }
+            }, 100);
 
             // Auto-generate slug from title
             document.getElementById('title').addEventListener('input', function() {

@@ -23,6 +23,14 @@
                                         @endif
                                     </div>
                                 </div>
+                            @else
+                                <!-- Debug: Show slider data when title/subtitle is empty -->
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <div class="text-center text-white px-4">
+                                        <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('company_name', $companyProfile->company_name ?? 'Welcome') }}</h1>
+                                        <p class="text-xl md:text-2xl">{{ $companyProfile->description ?? 'Discover our amazing products' }}</p>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                     </div>

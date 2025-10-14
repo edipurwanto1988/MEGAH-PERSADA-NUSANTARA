@@ -422,23 +422,57 @@
             const menuItems = document.querySelectorAll('.menu-item');
             const menuOrder = Array.from(menuItems).map(item => item.dataset.menuId);
             
+            console.log('Updating menu order:', menuOrder);
+            
             fetch('/admin/menus/order', {
                 method: 'PUT',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({
                     menu_order: menuOrder
                 })
             })
-            .then(response => response.json())
+            .then(response => {
+                console.log('Response status:', response.status);
+                return response.json();
+            })
             .then(data => {
-                if (!data.success) {
+                console.log('Response data:', data);
+                if (data.success) {
+                    // Show success message
+                    const successDiv = document.createElement('div');
+                    successDiv.className = 'mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded';
+                    successDiv.textContent = 'Menu order updated successfully!';
+                    
+                    const firstDiv = document.querySelector('.max-w-7xl');
+                    firstDiv.parentNode.insertBefore(successDiv, firstDiv);
+                    
+                    // Remove success message after 3 seconds
+                    setTimeout(() => {
+                        successDiv.remove();
+                    }, 3000);
+                } else {
                     console.error('Error updating menu order');
                 }
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error updating menu order:', error);
+                // Show error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded';
+                errorDiv.textContent = 'Error updating menu order. Please try again.';
+                
+                const firstDiv = document.querySelector('.max-w-7xl');
+                firstDiv.parentNode.insertBefore(errorDiv, firstDiv);
+                
+                // Remove error message after 3 seconds
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 3000);
+            });
         }
     </script>
 </x-admin-layout>
