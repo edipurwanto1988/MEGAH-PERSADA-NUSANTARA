@@ -74,16 +74,11 @@
                     <p class="text-slate-600 dark:text-slate-300 mb-6">
                         {{ Str::limit($product->description, 200) }}
                     </p>
-                    @if($product->external_link)
+                    @if($product->external_link && ($product->price > 0 || $product->final_price > 0))
                     <a href="{{ $product->external_link }}" target="_blank" class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-opacity-90 transition-all w-full sm:w-auto">
                         <span class="material-symbols-outlined mr-2">download</span>
                         E-Catalog
                     </a>
-                    @else
-                    <button class="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-opacity-90 transition-all w-full sm:w-auto" disabled>
-                        <span class="material-symbols-outlined mr-2">download</span>
-                        E-Catalog
-                    </button>
                     @endif
                 </div>
             </div>

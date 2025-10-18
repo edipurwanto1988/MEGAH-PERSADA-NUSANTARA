@@ -1,6 +1,6 @@
 <x-web-layout :title="$companyProfile->company_name . ' - Produk'" :metaDescription="setting('meta_description')">
     <!-- Hero Section -->
-    <section class="relative h-[40vh] min-h-[300px] bg-cover bg-center" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url("https://picsum.photos/seed/products/1920/600.jpg");'>
+    <section class="relative h-[40vh] min-h-[300px] bg-cover bg-center" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url("https://picsum.photos/seed/medical-cabinet-healthcare-storage/1920/600.jpg");'>
         <div class="absolute inset-0 flex items-center justify-center">
             <div class="text-center">
                 <h1 class="text-4xl sm:text-5xl font-bold text-white mb-4">
@@ -47,13 +47,17 @@
                                 @else
                                     <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("https://picsum.photos/seed/product{{ $product->id }}/400/300.jpg");'></div>
                                 @endif
-                                <div class="p-6">
+                                <div class="p-6 flex flex-col h-full">
                                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $product->product_name }}</h3>
                                     <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ Str::limit($product->description, 100) }}</p>
-                                    <div class="mt-4 flex items-baseline gap-2">
-                                        <span class="text-xl font-bold text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                        @if($product->final_price)
-                                            <span class="text-sm text-slate-500 dark:text-slate-400 line-through">Rp {{ number_format($product->final_price, 0, ',', '.') }}</span>
+                                    <div class="flex-grow">
+                                        @if(($product->price ?? 0) > 0 || ($product->final_price ?? 0) > 0)
+                                        <div class="mt-4 flex items-baseline gap-2">
+                                            <span class="text-xl font-bold text-primary">Rp {{ number_format($product->final_price ?: $product->price, 0, ',', '.') }}</span>
+                                            @if($product->final_price && $product->final_price != $product->price)
+                                                <span class="text-sm text-slate-500 dark:text-slate-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                            @endif
+                                        </div>
                                         @endif
                                     </div>
                                     <div class="mt-4">

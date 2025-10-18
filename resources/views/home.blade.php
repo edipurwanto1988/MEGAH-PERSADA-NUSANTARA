@@ -80,13 +80,17 @@
                                 @else
                                     <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("https://picsum.photos/seed/product{{ $product->id }}/400/300.jpg");'></div>
                                 @endif
-                                <div class="p-6">
+                                <div class="p-6 flex flex-col h-full">
                                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $product->product_name }}</h3>
                                     <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ Str::limit($product->description, 100) }}</p>
-                                    <div class="mt-4 flex items-baseline gap-2">
-                                        <span class="text-xl font-bold text-primary">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                        @if($product->final_price)
-                                            <span class="text-sm text-slate-500 dark:text-slate-400 line-through">Rp {{ number_format($product->final_price, 0, ',', '.') }}</span>
+                                    <div class="flex-grow">
+                                        @if(($product->price ?? 0) > 0 || ($product->final_price ?? 0) > 0)
+                                        <div class="mt-4 flex items-baseline gap-2">
+                                            <span class="text-xl font-bold text-primary">Rp {{ number_format($product->final_price ?: $product->price, 0, ',', '.') }}</span>
+                                            @if($product->final_price && $product->final_price != $product->price)
+                                                <span class="text-sm text-slate-500 dark:text-slate-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                            @endif
+                                        </div>
                                         @endif
                                     </div>
                                     <div class="mt-4">
@@ -169,7 +173,11 @@
                     @foreach($partners as $partner)
                         <div class="flex-shrink-0 w-80">
                             <div class="flex items-center justify-center p-6 bg-background-light dark:bg-background-dark rounded-lg h-40">
-                                <div class="w-full h-full bg-contain bg-center bg-no-repeat" style='background-image: url("https://picsum.photos/seed/partner{{ $partner->id }}/200/100.jpg");'></div>
+                                @if($partner->logo)
+                                    <div class="w-full h-full bg-contain bg-center bg-no-repeat" style='background-image: url("{{ Storage::url($partner->logo) }}");'></div>
+                                @else
+                                    <div class="w-full h-full bg-contain bg-center bg-no-repeat" style='background-image: url("https://picsum.photos/seed/partner{{ $partner->id }}/200/100.jpg");'></div>
+                                @endif
                             </div>
                         </div>
                     @endforeach
