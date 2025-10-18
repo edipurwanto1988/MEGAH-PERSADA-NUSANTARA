@@ -172,12 +172,11 @@
                 <div class="flex overflow-x-auto no-scrollbar -mx-4 px-4 pb-8 gap-8" id="partner-slider">
                     @foreach($partners as $partner)
                         <div class="flex-shrink-0 w-80">
-                            <div class="flex items-center justify-center p-6 bg-background-light dark:bg-background-dark rounded-lg h-40">
-                                @if($partner->logo)
-                                    <div class="w-full h-full bg-contain bg-center bg-no-repeat" style='background-image: url("{{ Storage::url($partner->logo) }}");'></div>
-                                @else
-                                    <div class="w-full h-full bg-contain bg-center bg-no-repeat" style='background-image: url("https://picsum.photos/seed/partner{{ $partner->id }}/200/100.jpg");'></div>
-                                @endif
+                            <div class="flex flex-col items-center justify-center p-6 bg-background-light dark:bg-background-dark rounded-lg">
+                                <div class="w-full h-32 bg-contain bg-center bg-no-repeat mb-4"
+                                     style='background-image: url("@if($partner->logo) {{ Storage::url($partner->logo) }} @else https://picsum.photos/seed/partner{{ $partner->id }}/200/100.jpg @endif");'>
+                                </div>
+                                <h3 class="text-center text-sm font-medium text-slate-800 dark:text-slate-200">{{ $partner->partner_name }}</h3>
                             </div>
                         </div>
                     @endforeach
