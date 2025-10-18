@@ -37,7 +37,7 @@
 
                             <div class="col-span-6 sm:col-span-3">
                                 <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
-                                <input type="number" name="price" id="price" value="{{ old('price', $product->price) }}" step="0.01" min="0" required
+                                <input type="number" name="price" id="price" value="{{ old('price', $product->price) }}" step="0.01" min="0"
                                        class="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                             </div>
 
@@ -145,7 +145,7 @@
                         <div class="md:grid md:grid-cols-3 md:gap-6">
                             <div class="md:col-span-1">
                                 <h3 class="text-lg font-medium leading-6 text-gray-900">New Specifications</h3>
-                                <p class="mt-1 text-sm text-gray-500">Add new product specifications with their values.</p>
+                                <p class="mt-1 text-sm text-gray-500">Add new product specifications with their values (optional).</p>
                                 <button type="button" id="json-spec-helper" class="mt-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded text-sm">
                                     <i class="fas fa-code mr-2"></i>JSON Helper
                                 </button>
@@ -434,9 +434,6 @@
                         spec_value: spec.pivot.spec_value
                     });
                 });
-            } else {
-                // Add one empty specification if none exist
-                addSpecification();
             }
         });
 

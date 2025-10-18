@@ -8,6 +8,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\Specification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
@@ -80,7 +81,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'product_name' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
             'final_price' => 'nullable|numeric|min:0',
             'category_id' => 'required|exists:product_categories,id',
             'status' => 'required|in:active,inactive',
@@ -89,8 +90,8 @@ class ProductController extends Controller
             'images' => 'nullable|array',
             'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'specifications' => 'nullable|array',
-            'specifications.*.specification_id' => 'required|exists:specifications,id',
-            'specifications.*.spec_value' => 'required|string|max:255',
+            'specifications.*.specification_id' => 'required_with:specifications.*.spec_value|exists:specifications,id',
+            'specifications.*.spec_value' => 'required_with:specifications.*.specification_id|string|max:255',
         ]);
 
         // Generate unique slug
@@ -159,14 +160,14 @@ class ProductController extends Controller
         $product->load('specifications');
         
         // Debug: Log product specifications
-        \Log::info('Product specifications for product ' . $product->id . ': ' . json_encode($product->specifications));
-        \Log::info('Specifications count: ' . ($product->specifications ? $product->specifications->count() : 'null'));
+        Log::info('Product specifications for product ' . $product->id . ': ' . json_encode($product->specifications));
+        Log::info('Specifications count: ' . ($product->specifications ? $product->specifications->count() : 'null'));
         
         // Debug: Check if specifications relationship exists
         if ($product->specifications) {
-            \Log::info('Specifications relationship exists');
+            Log::info('Specifications relationship exists');
         } else {
-            \Log::info('Specifications relationship is null');
+            Log::info('Specifications relationship is null');
         }
         
         return view('admin.products.edit', compact('product', 'categories', 'specifications'));
@@ -180,7 +181,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'product_name' => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric|min:0',
+            'price' => 'nullable|numeric|min:0',
             'final_price' => 'nullable|numeric|min:0',
             'category_id' => 'required|exists:product_categories,id',
             'status' => 'required|in:active,inactive',
@@ -189,8 +190,8 @@ class ProductController extends Controller
             'new_images' => 'nullable|array',
             'new_images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'specifications' => 'nullable|array',
-            'specifications.*.specification_id' => 'required|exists:specifications,id',
-            'specifications.*.spec_value' => 'required|string|max:255',
+            'specifications.*.specification_id' => 'required_with:specifications.*.spec_value|exists:specifications,id',
+            'specifications.*.spec_value' => 'required_with:specifications.*.specification_id|string|max:255',
         ]);
 
         // Generate slug if product name changed
@@ -212,7 +213,7 @@ class ProductController extends Controller
         unset($validated['specifications']);
 
         // Debug: Log specifications data
-        \Log::info('Specifications data: ' . json_encode($specifications));
+        Log::info('Specifications data: ' . json_encode($specifications));
 
         $product->update($validated);
 
@@ -233,7 +234,7 @@ class ProductController extends Controller
         // Handle specifications
         if (!empty($specifications)) {
             // Debug: Log that we're processing specifications
-            \Log::info('Processing specifications for product ' . $product->id);
+            Log::info('Processing specifications for product ' . $product->id);
             
             // Remove existing specifications
             $product->specifications()->detach();
@@ -241,7 +242,7 @@ class ProductController extends Controller
             // Add new specifications
             foreach ($specifications as $spec) {
                 // Debug: Log each specification being attached
-                \Log::info('Attaching specification: ' . json_encode($spec));
+                Log::info('Attaching specification: ' . json_encode($spec));
                 
                 $product->specifications()->attach($spec['specification_id'], [
                     'spec_value' => $spec['spec_value']
@@ -249,7 +250,7 @@ class ProductController extends Controller
             }
         } else {
             // Debug: Log that specifications are empty
-            \Log::info('No specifications provided for product ' . $product->id);
+            Log::info('No specifications provided for product ' . $product->id);
             
             // Remove all specifications if none provided
             $product->specifications()->detach();
@@ -371,7 +372,7 @@ class ProductController extends Controller
             }
         } catch (\Exception $e) {
             // Log the error for debugging
-            \Log::error('Thumbnail generation failed: ' . $e->getMessage());
+            Log::error('Thumbnail generation failed: ' . $e->getMessage());
             return null;
         }
     }
