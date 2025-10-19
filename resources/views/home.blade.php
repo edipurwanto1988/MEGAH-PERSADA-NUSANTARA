@@ -126,19 +126,19 @@
                 <div class="flex overflow-x-auto no-scrollbar -mx-4 px-4 pb-8 gap-6 sm:gap-8" id="article-slider">
                     @foreach($posts as $post)
                         <div class="flex-shrink-0 w-80">
-                            <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                            <div class="bg-background-light-alt dark:bg-background-dark-alt rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 h-[400px] flex flex-col">
                                 @if($post->featured_image)
                                     @if(str_starts_with($post->featured_image, 'http'))
-                                        <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("{{ $post->featured_image }}");'></div>
+                                        <div class="w-full aspect-video bg-cover bg-center flex-shrink-0" style='background-image: url("{{ $post->featured_image }}");'></div>
                                     @else
-                                        <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("{{ Storage::url($post->featured_image) }}");'></div>
+                                        <div class="w-full aspect-video bg-cover bg-center flex-shrink-0" style='background-image: url("{{ Storage::url($post->featured_image) }}");'></div>
                                     @endif
                                 @else
-                                    <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("https://picsum.photos/seed/article{{ $post->id }}/800/600.jpg");'></div>
+                                    <div class="w-full aspect-video bg-cover bg-center flex-shrink-0" style='background-image: url("https://picsum.photos/seed/article{{ $post->id }}/800/600.jpg");'></div>
                                 @endif
-                                <div class="p-6">
-                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $post->title }}</h3>
-                                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ $post->excerpt ? Str::limit($post->excerpt, 100) : Str::limit(strip_tags($post->content), 100) }}</p>
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{ $post->title }}</h3>
+                                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 flex-grow overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ $post->excerpt ? Str::limit($post->excerpt, 100) : Str::limit(strip_tags($post->content), 100) }}</p>
                                     <div class="mt-4">
                                         <a href="/artikel/{{ $post->slug }}" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Baca Selengkapnya</a>
                                     </div>
