@@ -45,9 +45,9 @@
                         <a href="#articles" class="text-gray-600 hover:text-blue-600 transition">Artikel</a>
                         <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Kontak</a>
                         @guest
-                            <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">Login</a>
+                            <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hidden md:inline-block">Login</a>
                         @else
-                            <a href="/admin/dashboard" class="px-4 py-2 text-sm font-bold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 transition-colors">Dashboard</a>
+                            <a href="/admin/dashboard" class="px-4 py-2 text-sm font-bold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 transition-colors hidden md:inline-block">Dashboard</a>
                         @endguest
                     </div>
                     
@@ -67,11 +67,6 @@
                         <a href="#products" class="text-gray-600 hover:text-blue-600 transition">Produk</a>
                         <a href="#articles" class="text-gray-600 hover:text-blue-600 transition">Artikel</a>
                         <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Kontak</a>
-                        @guest
-                            <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-center">Login</a>
-                        @else
-                            <a href="/admin/dashboard" class="px-4 py-2 text-sm font-bold rounded-lg bg-primary/10 text-primary hover:bg-primary/20 dark:bg-primary/20 dark:hover:bg-primary/30 transition-colors text-center">Dashboard</a>
-                        @endguest
                     </div>
                 </div>
             </nav>

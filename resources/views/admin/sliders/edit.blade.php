@@ -105,26 +105,28 @@
                 </div>
 
                 <div class="flex justify-between">
-                    <div class="flex items-center gap-4">
-                        <form action="{{ route('admin.sliders.destroy', $slider) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this slider? This action cannot be undone.')" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="px-6 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Delete Slider
-                            </button>
-                        </form>
-                    </div>
                     <div class="flex gap-4">
                         <a href="{{ route('admin.sliders.show', $slider) }}" class="px-6 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-medium hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
                             Cancel
                         </a>
-                        <button type="submit" form="slider-form" class="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg font-medium hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                             Update Slider
                         </button>
                     </div>
                 </div>
             </div>
         </form>
+
+        <!-- Delete Form - Moved outside the update form -->
+        <div class="mt-6">
+            <form action="{{ route('admin.sliders.destroy', $slider) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this slider? This action cannot be undone.')" class="inline">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-6 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                    Delete Slider
+                </button>
+            </form>
+        </div>
     </main>
 
     <!-- File Preview Script -->
