@@ -30,7 +30,7 @@ class HomeController extends Controller
         $products = Product::with('images')->where('status','active' )->take(6)->get();
         $posts = Post::with(['category', 'author'])
                      ->orderBy('published_date', 'desc')
-                     ->take(3)
+                     ->take(4)
                      ->get();
         $partners = Partner::orderBy('order_no')->get();
         $companyProfile = CompanyProfile::first();
