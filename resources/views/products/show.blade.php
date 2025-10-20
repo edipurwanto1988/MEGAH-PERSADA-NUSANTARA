@@ -100,9 +100,9 @@
                         @if($product->specifications && $product->specifications->count() > 0)
                         <div class="divide-y divide-slate-200 dark:divide-slate-800 border-t border-slate-200 dark:border-slate-800">
                             @foreach($product->specifications as $specification)
-                            <div class="py-4 grid grid-cols-3 gap-4">
-                                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 col-span-1">{{ $specification->spec_name }}</p>
-                                <p class="text-sm text-slate-800 dark:text-slate-200 col-span-2">{{ $specification->pivot->spec_value }}</p>
+                            <div class="py-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <p class="text-sm font-medium text-slate-500 dark:text-slate-400 md:col-span-1">{{ $specification->spec_name }}</p>
+                                <p class="text-sm text-slate-800 dark:text-slate-200 md:col-span-2">{{ $specification->pivot->spec_value }}</p>
                             </div>
                             @endforeach
                         </div>
