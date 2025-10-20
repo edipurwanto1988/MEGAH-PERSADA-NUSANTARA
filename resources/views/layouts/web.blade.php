@@ -43,7 +43,7 @@
                         <a href="#about" class="text-gray-600 hover:text-blue-600 transition">Tentang</a>
                         <a href="#products" class="text-gray-600 hover:text-blue-600 transition">Produk</a>
                         <a href="#articles" class="text-gray-600 hover:text-blue-600 transition">Artikel</a>
-                        <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Kontak</a>
+                        <a href="{{ route('contact') }}" class="text-gray-600 hover:text-blue-600 transition">Kontak</a>
                         @guest
                             <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition hidden md:inline-block">Login</a>
                         @else
@@ -66,7 +66,7 @@
                         <a href="#about" class="text-gray-600 hover:text-blue-600 transition">Tentang</a>
                         <a href="#products" class="text-gray-600 hover:text-blue-600 transition">Produk</a>
                         <a href="#articles" class="text-gray-600 hover:text-blue-600 transition">Artikel</a>
-                        <a href="#contact" class="text-gray-600 hover:text-blue-600 transition">Kontak</a>
+                        <a href="{{ route('contact') }}" class="text-gray-600 hover:text-blue-600 transition">Kontak</a>
                     </div>
                 </div>
             </nav>
@@ -96,6 +96,7 @@
                             <li><a href="#about" class="text-gray-400 hover:text-white transition">Tentang</a></li>
                             <li><a href="#products" class="text-gray-400 hover:text-white transition">Produk</a></li>
                             <li><a href="#articles" class="text-gray-400 hover:text-white transition">Artikel</a></li>
+                            <li><a href="{{ route('contact') }}" class="text-gray-400 hover:text-white transition">Kontak</a></li>
                         </ul>
                     </div>
                     

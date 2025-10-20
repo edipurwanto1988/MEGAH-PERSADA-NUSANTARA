@@ -1,12 +1,12 @@
 <x-web-layout :title="($companyName ?? $companyProfile->company_name) . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')" :metaDescription="$metaDescription">
     <!-- Hero Section with Slider -->
-    <section id="home" class="relative w-full h-[75vh] min-h-[500px] max-h-[800px] overflow-hidden lg:h-[70vh]">
+    <section id="home" class="relative w-full aspect-[16/9] sm:aspect-[16/10] md:aspect-[16/8] lg:aspect-[16/7] xl:aspect-[16/6] overflow-hidden">
         @if($sliders && $sliders->count() > 0)
             <!-- Slider Container -->
             <div class="relative w-full h-full">
                 @foreach($sliders as $index => $slider)
                     <div class="slider-slide absolute inset-0 w-full h-full transition-opacity duration-1000 {{ $index === 0 ? 'opacity-100' : 'opacity-0' }}" data-slide="{{ $index }}">
-                        <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('{{ asset('storage/' . $slider->image_url) }}');">
+                        <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('{{ asset('storage/' . $slider->image_url) }}'); background-position: center;">
                          
                         </div>
                     </div>
@@ -33,7 +33,7 @@
             </button>
         @else
             <!-- Fallback Hero Section if no sliders -->
-            <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('https://picsum.photos/seed/hero/1920/1080.jpg');">
+            <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('https://picsum.photos/seed/hero/1920/1080.jpg'); background-position: center;">
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="text-center text-white px-4">
                         <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('company_name', $companyProfile->company_name ?? 'Welcome') }}</h1>
@@ -74,16 +74,16 @@
                 <div class="flex overflow-x-auto no-scrollbar -mx-4 px-4 pb-8 gap-6 sm:gap-8" id="product-slider">
                     @foreach($products as $product)
                         <div class="flex-shrink-0 w-80">
-                            <div class="bg-background-light dark:bg-background-dark rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                            <div class="bg-background-light dark:bg-background-dark rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 h-[400px] flex flex-col">
                                 @if($product->images && $product->images->count() > 0)
-                                    <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("{{ Storage::url($product->images->first()->image_url) }}");'></div>
+                                    <div class="w-full aspect-video bg-cover bg-center flex-shrink-0" style='background-image: url("{{ Storage::url($product->images->first()->image_url) }}");'></div>
                                 @else
-                                    <div class="w-full aspect-video bg-cover bg-center" style='background-image: url("https://picsum.photos/seed/product{{ $product->id }}/400/300.jpg");'></div>
+                                    <div class="w-full aspect-video bg-cover bg-center flex-shrink-0" style='background-image: url("https://picsum.photos/seed/product{{ $product->id }}/400/300.jpg");'></div>
                                 @endif
-                                <div class="p-6 flex flex-col h-full">
-                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $product->product_name }}</h3>
-                                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ Str::limit($product->description, 100) }}</p>
-                                    <div class="flex-grow">
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <h3 class="text-lg font-bold text-slate-900 dark:text-white overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{ $product->product_name }}</h3>
+                                    <p class="mt-2 text-sm text-slate-600 dark:text-slate-400 flex-grow overflow-hidden" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;">{{ Str::limit($product->description, 100) }}</p>
+                                    <div>
                                         @if(($product->price ?? 0) > 0 || ($product->final_price ?? 0) > 0)
                                         <div class="mt-4 flex items-baseline gap-2">
                                             <span class="text-xl font-bold text-primary">Rp {{ number_format($product->final_price ?: $product->price, 0, ',', '.') }}</span>

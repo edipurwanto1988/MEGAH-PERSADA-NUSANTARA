@@ -1,3 +1,6 @@
+/* Import Light Gallery Styles */
+@import './light-gallery.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

@@ -1,0 +1,445 @@
+/* Light Gallery Styles */
+.lg-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+.lg-container.lg-open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.lg-container.lg-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lg-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.lg-outer {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lg-content {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.lg-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lg-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.lg-item.lg-current {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.lg-item:not(.lg-current) {
+    transform: scale(0.8);
+}
+
+.lg-object {
+    max-width: 90%;
+    max-height: 90%;
+    width: auto;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+.lg-toolbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.lg-icon {
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: white;
+}
+
+.lg-icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lg-icon::before {
+    font-family: 'Material Symbols Outlined';
+    font-size: 20px;
+}
+
+.lg-icon-close::before {
+    content: 'close';
+}
+
+.lg-icon-download::before {
+    content: 'download';
+}
+
+.lg-icon-fullscreen::before {
+    content: 'fullscreen';
+}
+
+.lg-icon-zoom-in::before {
+    content: 'zoom_in';
+}
+
+.lg-icon-zoom-out::before {
+    content: 'zoom_out';
+}
+
+.lg-sub-html {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 0 20px;
+    z-index: 10;
+}
+
+.lg-sub-html h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.lg-sub-html p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.lg-counter {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 14px;
+    z-index: 10;
+}
+
+.lg-thumb-outer {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.lg-thumb-group {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    max-width: 90%;
+    padding: 0 10px;
+}
+
+.lg-thumb-item {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.lg-thumb-item:hover,
+.lg-thumb-item.lg-current {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.lg-thumb-item.lg-current {
+    border-color: white;
+}
+
+.lg-thumb-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Product Gallery Styles */
+.product-gallery-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.product-gallery-section .gallery-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-gallery-section .gallery-item img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    cursor: zoom-in;
+}
+
+.product-gallery-section .gallery-item.hidden {
+    display: none;
+}
+
+.product-gallery-section .gallery-item.block {
+    display: flex;
+}
+
+/* Gallery Thumbnails */
+.gallery-thumbnails {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+    padding: 20px;
+    z-index: 5;
+}
+
+.thumbnail-item {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.thumbnail-item:hover,
+.thumbnail-item.ring-2 {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.thumbnail-item.ring-2 {
+    border-color: white;
+}
+
+.thumbnail-item.opacity-70 {
+    opacity: 0.7;
+}
+
+/* Gallery Controls */
+.gallery-controls {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.gallery-controls button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.gallery-controls button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .lg-toolbar {
+        padding: 10px;
+        gap: 5px;
+    }
+    
+    .lg-icon {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .lg-icon::before {
+        font-size: 18px;
+    }
+    
+    .lg-sub-html {
+        bottom: 100px;
+        padding: 0 10px;
+    }
+    
+    .lg-sub-html h4 {
+        font-size: 16px;
+    }
+    
+    .lg-sub-html p {
+        font-size: 12px;
+    }
+    
+    .lg-counter {
+        top: 10px;
+        left: 10px;
+        font-size: 12px;
+    }
+    
+    .lg-thumb-item {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .thumbnail-item {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .gallery-controls {
+        top: 10px;
+        right: 10px;
+    }
+    
+    .gallery-controls button {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .gallery-thumbnails {
+        padding: 10px;
+    }
+}
+
+/* Animation Classes */
+.lg-slide .lg-item {
+    transform: translateX(100%);
+}
+
+.lg-slide .lg-item.lg-current {
+    transform: translateX(0);
+}
+
+.lg-slide .lg-item.lg-prev-slide {
+    transform: translateX(-100%);
+}
+
+.lg-slide .lg-item.lg-next-slide {
+    transform: translateX(100%);
+}
+
+.lg-fade .lg-item {
+    transition: opacity 0.3s ease;
+}
+
+.lg-zoom-in .lg-item {
+    transform: scale(0.8);
+}
+
+.lg-zoom-in .lg-item.lg-current {
+    transform: scale(1);
+}
+
+/* Loading State */
+.lg-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: lg-spin 1s ease-in-out infinite;
+}
+
+@keyframes lg-spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Error State */
+.lg-error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+}
+
+.lg-error::before {
+    content: 'error';
+    font-family: 'Material Symbols Outlined';
+    font-size: 48px;
+    display: block;
+    margin-bottom: 10px;
+}

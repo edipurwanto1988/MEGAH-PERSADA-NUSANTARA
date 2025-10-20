@@ -32,6 +32,10 @@ Route::get('/artikel/{slug}', [ArticleController::class, 'show'])->name('article
 // Page routes
 Route::get('/pages/{slug}', [App\Http\Controllers\PageController::class, 'show'])->name('pages.show');
 
+// Contact routes
+Route::get('/kontak', [HomeController::class, 'contact'])->name('contact');
+Route::post('/kontak', [HomeController::class, 'contactSubmit'])->name('contact.submit');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
