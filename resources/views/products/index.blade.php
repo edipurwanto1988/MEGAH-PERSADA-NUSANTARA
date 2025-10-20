@@ -50,16 +50,14 @@
                                 <div class="p-6 flex flex-col h-full">
                                     <h3 class="text-lg font-bold text-slate-900 dark:text-white">{{ $product->product_name }}</h3>
                                     <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">{{ Str::limit($product->description, 100) }}</p>
-                                    <div class="flex-grow">
-                                        @if(($product->price ?? 0) > 0 || ($product->final_price ?? 0) > 0)
-                                        <div class="mt-4 flex items-baseline gap-2">
-                                            <span class="text-xl font-bold text-primary">Rp {{ number_format($product->final_price ?: $product->price, 0, ',', '.') }}</span>
-                                            @if($product->final_price && $product->final_price != $product->price)
-                                                <span class="text-sm text-slate-500 dark:text-slate-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                            @endif
-                                        </div>
+                                    @if(($product->price ?? 0) > 0 || ($product->final_price ?? 0) > 0)
+                                    <div class="flex-grow mt-4 flex items-baseline gap-2">
+                                        <span class="text-xl font-bold text-primary">Rp {{ number_format($product->final_price ?: $product->price, 0, ',', '.') }}</span>
+                                        @if($product->final_price && $product->final_price != $product->price)
+                                            <span class="text-sm text-slate-500 dark:text-slate-400 line-through">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
                                         @endif
                                     </div>
+                                    @endif
                                     <div class="mt-4">
                                         <a href="/products/{{ $product->slug }}" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Lihat Detail</a>
                                     </div>

@@ -4,18 +4,24 @@
         <section class="relative w-full overflow-hidden bg-white py-8">
             @if($product->images && $product->images->count() > 0)
                 <!-- Main Image Display -->
-                <div class="relative bg-gray-100 overflow-hidden" style="min-height: 400px;">
-                    @foreach($product->images as $image)
-                        <div class="gallery-item absolute inset-0 {{ $loop->first ? '' : 'hidden' }}" data-index="{{ $loop->iteration - 1 }}">
-                            <div class="flex items-center justify-center w-full h-full p-4">
-                                <img src="{{ asset('storage/' . $image->image_url) }}"
-                                     alt="{{ $product->product_name }}"
-                                     class="max-w-full max-h-full object-contain cursor-pointer transition-transform duration-500 hover:scale-105"
-                                     onclick="openImageModal({{ $loop->iteration - 1 }})"
-                                     onerror="this.src='https://picsum.photos/seed/product{{ $product->id }}{{ $loop->iteration }}/800/600.jpg'">
+                <div class="relative bg-gray-100 overflow-hidden" style="height: 500px;">
+                    @if($product->images && $product->images->count() > 0)
+                        @foreach($product->images as $image)
+                            <div class="gallery-item {{ $loop->first ? 'block' : 'hidden' }}" data-index="{{ $loop->iteration - 1 }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                <div class="flex items-center justify-center w-full h-full p-4">
+                                    <img src="{{ asset('storage/' . $image->image_url) }}"
+                                         alt="{{ $product->product_name }}"
+                                         style="max-width: 100%; max-height: 100%; object-fit: contain; cursor: pointer;"
+                                         onclick="openImageModal({{ $loop->iteration - 1 }})"
+                                         onerror="this.onerror=null; this.src='https://picsum.photos/seed/product{{ $product->id }}{{ $loop->iteration }}/800/600.jpg';">
+                                </div>
                             </div>
+                        @endforeach
+                    @else
+                        <div class="flex items-center justify-center w-full h-full p-4">
+                            <p class="text-gray-500">No images available for this product.</p>
                         </div>
-                    @endforeach
+                    @endif
                 </div>
                 
                 <!-- Navigation Controls -->
@@ -86,12 +92,16 @@
                     <span class="text-sm font-medium text-primary mb-2 inline-block">Category: {{ $product->category->category_name ?? 'Uncategorized' }}</span>
                     <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">{{ $product->product_name }}</h1>
                 
-                    @if($product->external_link && ($product->price > 0 || $product->final_price > 0))
-                    <a href="{{ $product->external_link }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary/90 transition-all text-lg">
-                        <span class="material-symbols-outlined mr-2">download</span>
-                        Download E-Catalog
-                    </a>
-                    @endif
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/products" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Kembali ke Produk</a>
+                        
+                        @if($product->external_link && ($product->price > 0 || $product->final_price > 0))
+                        <a href="{{ $product->external_link }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary/90 transition-all text-lg">
+                            <span class="material-symbols-outlined mr-2">download</span>
+                            Download E-Catalog
+                        </a>
+                        @endif
+                    </div>
                 </div>
             
             <!-- Product Details -->
