@@ -1,59 +1,38 @@
 <x-web-layout :title="$product->product_name . ' - ' . $companyProfile->company_name" :metaDescription="Str::limit($product->description, 160)">
     <main class="flex-grow bg-background-light dark:bg-background-dark">
-        <!-- Product Gallery - Full Width -->
-        <section class="relative w-full h-[50vh] md:h-[80vh] overflow-hidden bg-white">
+        <!-- Product Gallery - Masonry Layout -->
+        <section class="relative w-full overflow-hidden bg-white py-8">
             @if($product->images && $product->images->count() > 0)
-                <!-- Main Image Display -->
-                <div class="relative w-full h-full bg-white">
-                    @foreach($product->images as $image)
-                        <div class="main-image-container absolute inset-0 {{ $loop->first ? '' : 'hidden' }}" data-index="{{ $loop->iteration - 1 }}">
-                            <img src="{{ asset('storage/' . $image->image_url) }}"
-                                 alt="{{ $product->product_name }}"
-                                 class="w-full h-full object-cover cursor-pointer"
-                                 onclick="openImageModal({{ $loop->iteration - 1 }})"
-                                 style="position: absolute; top: 0; left: 0;">
-                        </div>
-                    @endforeach
-                </div>
-                
-                <!-- Gallery Thumbnails -->
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/10 to-transparent p-4">
-                    <div class="flex justify-center space-x-2 overflow-x-auto pb-2">
+                <!-- Masonry Gallery -->
+                <div class="container mx-auto px-4">
+                    <div class="masonry-grid columns-1 md:columns-2 lg:columns-3 gap-4">
                         @foreach($product->images as $image)
-                            <div class="thumbnail-item flex-shrink-0 w-20 h-20 rounded overflow-hidden cursor-pointer transition-all @if($loop->first) ring-2 ring-white @else opacity-70 hover:opacity-100 @endif"
-                                 onclick="showImage({{ $loop->iteration - 1 }})">
-                                <img src="{{ asset('storage/' . $image->image_url) }}"
-                                     alt="{{ $product->product_name }}"
-                                     class="w-full h-full object-cover">
+                            <div class="masonry-item mb-4 break-inside-avoid">
+                                <div class="relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
+                                    <img src="{{ asset('storage/' . $image->image_url) }}"
+                                         alt="{{ $product->product_name }}"
+                                         class="w-full h-auto object-cover cursor-pointer"
+                                         onclick="openImageModal({{ $loop->iteration - 1 }})">
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                                        <button class="opacity-0 hover:opacity-100 bg-white text-gray-800 rounded-full p-2 transform -translate-y-2 hover:translate-y-0 transition-all duration-300">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         @endforeach
                     </div>
                 </div>
-                
-                <!-- Gallery Controls -->
-                <div class="absolute top-4 right-4 flex space-x-2">
-                    <button id="gallery-zoom-in" class="p-2 rounded-full bg-white/20 hover:bg-white/30 text-white transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"></path>
-                        </svg>
-                    </button>
-                    <button id="gallery-zoom-out" class="p-2 rounded-full bg-white/20 hover:bg-white/30 text-white transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7"></path>
-                        </svg>
-                    </button>
-                    <button id="gallery-fullscreen" class="p-2 rounded-full bg-white/20 hover:bg-white/30 text-white transition">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path>
-                        </svg>
-                    </button>
-                </div>
             @else
                 <!-- Fallback to placeholder if no images -->
-                <div class="w-full h-full flex items-center justify-center">
-                    <img src="https://picsum.photos/seed/product{{ $product->id }}/1200/800.jpg"
-                         alt="{{ $product->product_name }}"
-                         class="max-w-full max-h-full object-contain">
+                <div class="container mx-auto px-4">
+                    <div class="w-full h-96 flex items-center justify-center">
+                        <img src="https://picsum.photos/seed/product{{ $product->id }}/1200/800.jpg"
+                             alt="{{ $product->product_name }}"
+                             class="max-w-full max-h-full object-contain">
+                    </div>
                 </div>
             @endif
         </section>
@@ -132,34 +111,21 @@
         console.log('Main image containers found:', mainImageContainers.length);
         console.log('Thumbnails found:', thumbnails.length);
         
+        // Get all masonry images
+        const masonryImages = document.querySelectorAll('.masonry-item img');
+        
         // Global function to show image by index
         window.showImage = function(index) {
-            if (index < 0 || index >= mainImageContainers.length) return;
-            
-            console.log('Showing image:', index);
-            
-            // Hide all image containers
-            mainImageContainers.forEach(container => container.classList.add('hidden'));
-            
-            // Show current image container
-            mainImageContainers[index].classList.remove('hidden');
-            currentImageIndex = index;
-            
-            // Update thumbnails
-            updateThumbnails(index);
+            // This function is no longer needed for masonry layout
+            // but keeping it for compatibility
+            console.log('Masonry layout - showImage called with index:', index);
         };
         
         // Update thumbnails
         function updateThumbnails(index) {
-            thumbnails.forEach((thumb, i) => {
-                if (i === index) {
-                    thumb.classList.add('ring-2', 'ring-white');
-                    thumb.classList.remove('opacity-70');
-                } else {
-                    thumb.classList.remove('ring-2', 'ring-white');
-                    thumb.classList.add('opacity-70');
-                }
-            });
+            // This function is no longer needed for masonry layout
+            // but keeping it for compatibility
+            console.log('Masonry layout - updateThumbnails called with index:', index);
         }
         
         // Global function to open image modal
@@ -266,10 +232,13 @@
                 existingViewer.remove();
             }
             
+            // Get all masonry images
+            const masonryImages = document.querySelectorAll('.masonry-item img');
+            console.log('Total masonry images found:', masonryImages.length);
+            
             // Get all image sources
             const imageSources = [];
-            mainImageContainers.forEach(container => {
-                const img = container.querySelector('img');
+            masonryImages.forEach(img => {
                 if (img) {
                     imageSources.push({
                         src: img.src,
