@@ -92,16 +92,12 @@
                     <span class="text-sm font-medium text-primary mb-2 inline-block">Category: {{ $product->category->category_name ?? 'Uncategorized' }}</span>
                     <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">{{ $product->product_name }}</h1>
                 
-                    <div class="flex flex-wrap gap-4">
-                        <a href="/products" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90 transition">Kembali ke Produk</a>
-                        
-                        @if($product->external_link && ($product->price > 0 || $product->final_price > 0))
-                        <a href="{{ $product->external_link }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary/90 transition-all text-lg">
-                            <span class="material-symbols-outlined mr-2">download</span>
-                            Download E-Catalog
-                        </a>
-                        @endif
-                    </div>
+                    @if($product->external_link && ($product->price > 0 || $product->final_price > 0))
+                    <a href="{{ $product->external_link }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary/90 transition-all text-lg">
+                        <span class="material-symbols-outlined mr-2">download</span>
+                        Download E-Catalog
+                    </a>
+                    @endif
                 </div>
             
             <!-- Product Details -->
