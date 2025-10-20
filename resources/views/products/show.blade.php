@@ -1,16 +1,17 @@
 <x-web-layout :title="$product->product_name . ' - ' . $companyProfile->company_name" :metaDescription="Str::limit($product->description, 160)">
     <main class="flex-grow bg-background-light dark:bg-background-dark">
         <!-- Product Gallery - Full Width -->
-        <section class="relative w-full h-screen md:h-[80vh] overflow-hidden bg-white">
+        <section class="relative w-full h-[50vh] md:h-[80vh] overflow-hidden bg-white">
             @if($product->images && $product->images->count() > 0)
                 <!-- Main Image Display -->
-                <div class="relative w-full h-full flex items-center justify-center bg-white">
+                <div class="relative w-full h-full bg-white">
                     @foreach($product->images as $image)
-                        <div class="main-image-container absolute inset-0 flex items-center justify-center {{ $loop->first ? '' : 'hidden' }}" data-index="{{ $loop->iteration - 1 }}">
+                        <div class="main-image-container absolute inset-0 {{ $loop->first ? '' : 'hidden' }}" data-index="{{ $loop->iteration - 1 }}">
                             <img src="{{ asset('storage/' . $image->image_url) }}"
                                  alt="{{ $product->product_name }}"
-                                 class="max-w-full max-h-full object-contain cursor-pointer"
-                                 onclick="openImageModal({{ $loop->iteration - 1 }})">
+                                 class="w-full h-full object-cover cursor-pointer"
+                                 onclick="openImageModal({{ $loop->iteration - 1 }})"
+                                 style="position: absolute; top: 0; left: 0;">
                         </div>
                     @endforeach
                 </div>
