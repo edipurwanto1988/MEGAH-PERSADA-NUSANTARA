@@ -71,9 +71,7 @@
                 <div class="mb-12">
                     <span class="text-sm font-medium text-primary mb-2 inline-block">Category: {{ $product->category->category_name ?? 'Uncategorized' }}</span>
                     <h1 class="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">{{ $product->product_name }}</h1>
-                    <p class="text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
-                        {{ $product->description }}
-                    </p>
+                
                     @if($product->external_link && ($product->price > 0 || $product->final_price > 0))
                     <a href="{{ $product->external_link }}" target="_blank" class="inline-flex items-center justify-center px-8 py-4 rounded-lg bg-primary text-white font-bold shadow-lg hover:bg-primary/90 transition-all text-lg">
                         <span class="material-symbols-outlined mr-2">download</span>
@@ -83,7 +81,7 @@
                 </div>
             
             <!-- Product Details -->
-            <div class="mt-16 lg:mt-24">
+            <div class="mt-2 lg:mt-2">
                 <div class="border-b border-slate-200 dark:border-slate-800 mb-8">
                     <h3 class="text-xl font-bold text-slate-900 dark:text-white pb-3 border-b-2 border-primary inline-block">Product Details</h3>
                 </div>
