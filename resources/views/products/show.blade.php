@@ -1,7 +1,7 @@
 <x-web-layout :title="$product->product_name . ' - ' . $companyProfile->company_name" :metaDescription="Str::limit($product->description, 160)">
     <main class="flex-grow bg-background-light dark:bg-background-dark">
         <!-- Product Gallery - Proportional with Navigation -->
-        <section class="relative w-full overflow-hidden bg-white py-8">
+        <section class="relative w-full overflow-hidden bg-white">
             @if($product->images && $product->images->count() > 0)
                 <!-- Main Image Display -->
                 <div class="relative bg-gray-100 overflow-hidden" style="height: 500px;">
