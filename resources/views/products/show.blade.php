@@ -1,10 +1,10 @@
 <x-web-layout :title="$product->product_name . ' - ' . $companyProfile->company_name" :metaDescription="Str::limit($product->description, 160)">
     <main class="flex-grow bg-background-light dark:bg-background-dark">
         <!-- Product Gallery - Full Width -->
-        <section class="relative w-full h-screen md:h-[80vh] overflow-hidden bg-black">
+        <section class="relative w-full h-screen md:h-[80vh] overflow-hidden bg-white">
             @if($product->images && $product->images->count() > 0)
                 <!-- Main Image Display -->
-                <div class="relative w-full h-full flex items-center justify-center bg-black">
+                <div class="relative w-full h-full flex items-center justify-center bg-white">
                     @foreach($product->images as $image)
                         <div class="main-image-container absolute inset-0 flex items-center justify-center {{ $loop->first ? '' : 'hidden' }}" data-index="{{ $loop->iteration - 1 }}">
                             <img src="{{ asset('storage/' . $image->image_url) }}"
