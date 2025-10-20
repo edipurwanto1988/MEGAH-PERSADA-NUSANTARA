@@ -16,7 +16,7 @@
                 </div>
                 
                 <!-- Gallery Thumbnails -->
-                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/10 to-transparent p-4">
                     <div class="flex justify-center space-x-2 overflow-x-auto pb-2">
                         @foreach($product->images as $image)
                             <div class="thumbnail-item flex-shrink-0 w-20 h-20 rounded overflow-hidden cursor-pointer transition-all @if($loop->first) ring-2 ring-white @else opacity-70 hover:opacity-100 @endif"
