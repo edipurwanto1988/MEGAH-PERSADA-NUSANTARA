@@ -1,4 +1,4 @@
-<x-web-layout :title="$product->product_name . ' - ' . $companyProfile->company_name" :metaDescription="Str::limit($product->description, 160)">
+<x-web-layout :title="$product->product_name . ' - ' . setting('company_name', $companyProfile->company_name)" :metaDescription="Str::limit($product->description, 160)">
     <main class="flex-grow bg-background-light dark:bg-background-dark">
         <!-- Product Gallery - Proportional with Navigation -->
         <section class="relative w-full overflow-hidden bg-white">

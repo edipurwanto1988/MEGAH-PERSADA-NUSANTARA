@@ -1,4 +1,4 @@
-<x-web-layout :title="$companyProfile->company_name . ' - Artikel'" :metaDescription="setting('meta_description')">
+<x-web-layout :title="setting('company_name', $companyProfile->company_name) . ' - Artikel'" :metaDescription="setting('meta_description')">
     <!-- Hero Section -->
     <section class="relative h-[40vh] min-h-[300px] bg-cover bg-center" style='background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url("https://picsum.photos/seed/articles/1920/600.jpg");'>
         <div class="absolute inset-0 flex items-center justify-center">

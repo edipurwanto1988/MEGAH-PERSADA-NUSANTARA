@@ -1,4 +1,4 @@
-<x-web-layout :title="$article->title . ' - ' . $companyProfile->company_name" :metaDescription="$article->excerpt ? Str::limit($article->excerpt, 160) : Str::limit(strip_tags($article->content), 160)">
+<x-web-layout :title="$article->title . ' - ' . setting('company_name', $companyProfile->company_name)" :metaDescription="$article->excerpt ? Str::limit($article->excerpt, 160) : Str::limit(strip_tags($article->content), 160)">
     <main class="flex-grow bg-white">
         <div class="font-display" style="font-family: 'Newsreader', serif;">
             <div class="container mx-auto px-6 py-12 lg:py-20">
