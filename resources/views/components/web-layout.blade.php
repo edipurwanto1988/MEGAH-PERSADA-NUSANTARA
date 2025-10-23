@@ -13,11 +13,24 @@
             if (!isset($metaDescription) || !$metaDescription) {
                 $metaDescription = setting('meta_description');
             }
+            if($metaDescription) {
+                echo '<meta name="description" content="' . e($metaDescription) . '">';
+            }
         @endphp
-        @if($metaDescription)
-            <meta name="description" content="{{ $metaDescription }}">
-            <meta property="og:description" content="{{ $metaDescription }}">
-        @endif
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="{{ $title ?? setting('og_title', setting('company_name', config('app.name', 'Megah Persada Nusantara'))) }}">
+        <meta property="og:description" content="{{ $metaDescription ?? setting('og_description', setting('meta_description', setting('company_description', 'Solusi Terbaik untuk Bisnis Anda'))) }}">
+        <meta property="og:image" content="{{ $og_image ?? setting('og_image', asset('images/logo_megah_persada_nusantara.svg')) }}">
+        <meta property="og:url" content="{{ $og_url ?? setting('og_url', url()->current()) }}">
+        <meta property="og:type" content="{{ $og_type ?? 'website' }}">
+        <meta property="og:site_name" content="{{ $og_site_name ?? setting('og_site_name', setting('company_name', config('app.name', 'Megah Persada Nusantara'))) }}">
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="{{ $twitter_card ?? 'summary_large_image' }}">
+        <meta name="twitter:title" content="{{ $twitter_title ?? setting('twitter_title', $title ?? setting('company_name', config('app.name', 'Megah Persada Nusantara'))) }}">
+        <meta name="twitter:description" content="{{ $twitter_description ?? setting('twitter_description', setting('meta_description', setting('company_description', 'Solusi Terbaik untuk Bisnis Anda'))) }}">
+        <meta name="twitter:image" content="{{ $twitter_image ?? setting('twitter_image', setting('og_image', asset('images/logo_megah_persada_nusantara.svg'))) }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
