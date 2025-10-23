@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             ProductSeeder::class,
             ArticleSeeder::class,
             PageSeeder::class,
+            SeoSettingsSeeder::class,
         ]);
     }
 }

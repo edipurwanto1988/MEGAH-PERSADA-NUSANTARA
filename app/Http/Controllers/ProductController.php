@@ -31,7 +31,16 @@ class ProductController extends Controller
         // Get company profile
         $companyProfile = CompanyProfile::first();
         
-        return view('products.show', compact('product', 'relatedProducts', 'companyProfile'));
+        // SEO data for product detail
+        $title = $product->product_name . ' - ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaDescription = $product->short_description ?? substr(strip_tags($product->description ?? ''), 0, 160);
+        $metaKeywords = $product->product_name . ', ' . ($product->category->category_name ?? '') . ', ' . setting('company_name', 'Megah Persada Nusantara');
+        
+        // OG data
+        $ogImage = $product->images->first()->image_url ?? setting('og_image');
+        $ogUrl = url()->current();
+        
+        return view('products.show', compact('product', 'relatedProducts', 'companyProfile', 'title', 'metaDescription', 'metaKeywords', 'ogImage', 'ogUrl'));
     }
     
     /**
@@ -60,7 +69,12 @@ class ProductController extends Controller
         // Get company profile
         $companyProfile = CompanyProfile::first();
         
-        return view('products.index', compact('products', 'categories', 'companyProfile'));
+        // SEO data for products listing
+        $title = 'Produk - ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaDescription = setting('meta_description', 'Lihat daftar produk berkualitas dari ' . setting('company_name', 'Megah Persada Nusantara'));
+        $metaKeywords = 'produk, ' . setting('company_name', 'Megah Persada Nusantara') . ', kualitas';
+        
+        return view('products.index', compact('products', 'categories', 'companyProfile', 'title', 'metaDescription', 'metaKeywords'));
     }
     
     /**
@@ -88,6 +102,11 @@ class ProductController extends Controller
         // Get company profile
         $companyProfile = CompanyProfile::first();
         
-        return view('products.index', compact('products', 'categories', 'companyProfile', 'category'));
+        // SEO data for category products
+        $title = ($category->category_name ?? 'Produk') . ' - ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaDescription = 'Lihat daftar produk kategori ' . ($category->category_name ?? '') . ' dari ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaKeywords = ($category->category_name ?? '') . ', produk, ' . setting('company_name', 'Megah Persada Nusantara');
+        
+        return view('products.index', compact('products', 'categories', 'companyProfile', 'category', 'title', 'metaDescription', 'metaKeywords'));
     }
 }

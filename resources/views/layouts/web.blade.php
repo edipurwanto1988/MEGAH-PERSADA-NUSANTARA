@@ -14,6 +14,24 @@
 
         <title>{{ $title ?? setting('company_name', config('app.name', 'Megah Persada Nusantara')) }}</title>
 
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="{{ $meta_description ?? setting('meta_description', setting('company_description', 'Solusi Terbaik untuk Bisnis Anda')) }}">
+        <meta name="keywords" content="{{ $meta_keywords ?? setting('meta_keywords', 'bisnis, solusi, jasa, produk') }}">
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="{{ $og_title ?? setting('og_title', $title ?? setting('company_name', config('app.name', 'Megah Persada Nusantara'))) }}">
+        <meta property="og:description" content="{{ $og_description ?? setting('og_description', setting('meta_description', setting('company_description', 'Solusi Terbaik untuk Bisnis Anda'))) }}">
+        <meta property="og:image" content="{{ $og_image ?? setting('og_image', asset('images/logo_megah_persada_nusantara.svg')) }}">
+        <meta property="og:url" content="{{ $og_url ?? setting('og_url', url()->current()) }}">
+        <meta property="og:type" content="{{ $og_type ?? 'website' }}">
+        <meta property="og:site_name" content="{{ $og_site_name ?? setting('og_site_name', setting('company_name', config('app.name', 'Megah Persada Nusantara'))) }}">
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="{{ $twitter_card ?? 'summary_large_image' }}">
+        <meta name="twitter:title" content="{{ $twitter_title ?? setting('twitter_title', $title ?? setting('company_name', config('app.name', 'Megah Persada Nusantara'))) }}">
+        <meta name="twitter:description" content="{{ $twitter_description ?? setting('twitter_description', setting('meta_description', setting('company_description', 'Solusi Terbaik untuk Bisnis Anda'))) }}">
+        <meta name="twitter:image" content="{{ $twitter_image ?? setting('twitter_image', setting('og_image', asset('images/logo_megah_persada_nusantara.svg'))) }}">
+
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet" />

@@ -37,8 +37,24 @@ class HomeController extends Controller
         $advantages = Advantage::orderBy('order_no')->get();
         $menus = Menu::orderBy('order_no')->get();
         
+        // Get SEO data
+        $title = setting('meta_title', setting('company_name', 'Megah Persada Nusantara'));
+        $metaDescription = setting('meta_description', setting('company_description', 'Solusi Terbaik untuk Bisnis Anda'));
+        $metaKeywords = setting('meta_keywords', 'bisnis, solusi, jasa, produk');
+        
+        // OG data
+        $ogTitle = setting('og_title', $title);
+        $ogDescription = setting('og_description', $metaDescription);
+        $ogImage = setting('og_image');
+        $ogUrl = setting('og_url', url('/'));
+        $ogSiteName = setting('og_site_name', setting('company_name', 'Megah Persada Nusantara'));
+        
+        // Twitter data
+        $twitterTitle = setting('twitter_title', $title);
+        $twitterDescription = setting('twitter_description', $metaDescription);
+        $twitterImage = setting('twitter_image', $ogImage);
+        
         // Get meta description, site email, site address, and company name from settings
-        $metaDescription = setting('meta_description');
         $siteEmail = setting('site_email');
         $siteAddress = setting('site_address');
         $companyName = setting('company_name');
@@ -52,7 +68,11 @@ class HomeController extends Controller
             }
         }
         
-        return view('home', compact('sliders', 'products', 'posts', 'partners', 'companyProfile', 'advantages', 'menus', 'metaDescription', 'siteEmail', 'siteAddress', 'companyName'));
+        return view('home', compact(
+            'sliders', 'products', 'posts', 'partners', 'companyProfile', 'advantages', 'menus',
+            'title', 'metaDescription', 'metaKeywords', 'ogTitle', 'ogDescription', 'ogImage', 'ogUrl', 'ogSiteName',
+            'twitterTitle', 'twitterDescription', 'twitterImage', 'siteEmail', 'siteAddress', 'companyName'
+        ));
     }
     
     /**

@@ -118,10 +118,80 @@
                     </div>
 
                     <div>
+                        <label for="og_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            OG Title (Facebook/LinkedIn)
+                        </label>
+                        <input type="text" id="og_title" name="og_title" value="{{ setting('og_title') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Judul untuk social media sharing</p>
+                    </div>
+
+                    <div>
+                        <label for="og_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            OG Description
+                        </label>
+                        <textarea id="og_description" name="og_description" rows="3"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">{{ setting('og_description') }}</textarea>
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Deskripsi untuk social media sharing</p>
+                    </div>
+
+                    <div>
+                        <label for="og_image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            OG Image URL
+                        </label>
+                        <input type="url" id="og_image" name="og_image" value="{{ setting('og_image') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">URL gambar untuk social media (1200x630px)</p>
+                    </div>
+
+                    <div>
+                        <label for="og_url" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            OG URL
+                        </label>
+                        <input type="url" id="og_url" name="og_url" value="{{ setting('og_url') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">URL halaman (biasanya {{ url('/') }})</p>
+                    </div>
+
+                    <div>
+                        <label for="og_site_name" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            OG Site Name
+                        </label>
+                        <input type="text" id="og_site_name" name="og_site_name" value="{{ setting('og_site_name') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Nama situs untuk social media</p>
+                    </div>
+
+                    <div>
+                        <label for="twitter_title" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Twitter Title
+                        </label>
+                        <input type="text" id="twitter_title" name="twitter_title" value="{{ setting('twitter_title') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
+                    </div>
+
+                    <div>
+                        <label for="twitter_description" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Twitter Description
+                        </label>
+                        <textarea id="twitter_description" name="twitter_description" rows="3"
+                                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">{{ setting('twitter_description') }}</textarea>
+                    </div>
+
+                    <div>
+                        <label for="twitter_image" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+                            Twitter Image URL
+                        </label>
+                        <input type="url" id="twitter_image" name="twitter_image" value="{{ setting('twitter_image') }}"
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
+                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">URL gambar untuk Twitter Card</p>
+                    </div>
+
+                    <div>
                         <label for="google_analytics" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
                             Google Analytics ID
                         </label>
-                        <input type="text" id="google_analytics" name="google_analytics" value="{{ setting('google_analytics') }}" 
+                        <input type="text" id="google_analytics" name="google_analytics" value="{{ setting('google_analytics') }}"
                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm dark:bg-background-dark dark:border-gray-600 dark:text-white">
                     </div>
 

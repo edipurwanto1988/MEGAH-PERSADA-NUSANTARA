@@ -28,7 +28,16 @@ class ArticleController extends Controller
         // Get company profile
         $companyProfile = CompanyProfile::first();
         
-        return view('articles.show', compact('article', 'relatedArticles', 'companyProfile'));
+        // SEO data for article detail
+        $title = $article->title . ' - ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaDescription = $article->meta_description ?? substr(strip_tags($article->content ?? ''), 0, 160);
+        $metaKeywords = $article->meta_keywords ?? $article->title . ', ' . ($article->category->category_name ?? '') . ', ' . setting('company_name', 'Megah Persada Nusantara');
+        
+        // OG data
+        $ogImage = $article->featured_image ?? setting('og_image');
+        $ogUrl = url()->current();
+        
+        return view('articles.show', compact('article', 'relatedArticles', 'companyProfile', 'title', 'metaDescription', 'metaKeywords', 'ogImage', 'ogUrl'));
     }
     
     /**
@@ -43,7 +52,12 @@ class ArticleController extends Controller
         // Get company profile
         $companyProfile = CompanyProfile::first();
         
-        return view('articles.index', compact('articles', 'categories', 'companyProfile'));
+        // SEO data for articles listing
+        $title = 'Artikel - ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaDescription = setting('meta_description', 'Baca artikel menarik dari ' . setting('company_name', 'Megah Persada Nusantara'));
+        $metaKeywords = 'artikel, blog, ' . setting('company_name', 'Megah Persada Nusantara');
+        
+        return view('articles.index', compact('articles', 'categories', 'companyProfile', 'title', 'metaDescription', 'metaKeywords'));
     }
     
     /**
@@ -64,6 +78,11 @@ class ArticleController extends Controller
         // Get company profile
         $companyProfile = CompanyProfile::first();
         
-        return view('articles.index', compact('articles', 'categories', 'companyProfile', 'category'));
+        // SEO data for category articles
+        $title = ($category->category_name ?? 'Artikel') . ' - ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaDescription = 'Baca artikel kategori ' . ($category->category_name ?? '') . ' dari ' . setting('company_name', 'Megah Persada Nusantara');
+        $metaKeywords = ($category->category_name ?? '') . ', artikel, blog, ' . setting('company_name', 'Megah Persada Nusantara');
+        
+        return view('articles.index', compact('articles', 'categories', 'companyProfile', 'category', 'title', 'metaDescription', 'metaKeywords'));
     }
 }
