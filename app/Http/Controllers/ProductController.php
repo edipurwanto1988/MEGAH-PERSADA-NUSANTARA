@@ -7,6 +7,7 @@ use App\Models\ProductCategory;
 use App\Models\CompanyProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -36,14 +37,21 @@ class ProductController extends Controller
         $metaDescription = $product->short_description ?? substr(strip_tags($product->description ?? ''), 0, 160);
         $metaKeywords = $product->product_name . ', ' . ($product->category->category_name ?? '') . ', ' . setting('company_name', 'Megah Persada Nusantara');
         
-        // OG data - use full URLs for images
-        $firstImage = $product->images->first();
-        if ($firstImage) {
-            $og_image = url('storage/' . $firstImage->image_url);
-            $twitter_image = url('storage/' . $firstImage->image_url);
+        // OG data - get first image from product_images table directly using raw SQL
+        $productImage = DB::select(
+            "SELECT image_url FROM product_images
+             LEFT JOIN products ON products.id = product_images.product_id
+             WHERE products.slug = ? LIMIT 1",
+            [$slug]
+        );
+        
+        if (!empty($productImage) && $productImage[0]->image_url) {
+            $og_image = url('storage/' . $productImage[0]->image_url);
+            $twitter_image = url('storage/' . $productImage[0]->image_url);
         } else {
-            $og_image = setting('og_image', url('images/logo_megah_persada_nusantara.svg'));
-            $twitter_image = setting('twitter_image', setting('og_image', url('images/logo_megah_persada_nusantara.svg')));
+            // Use default logo
+            $og_image = url('images/logo_megah_persada_nusantara.svg');
+            $twitter_image = url('images/logo_megah_persada_nusantara.svg');
         }
         $og_url = url()->current();
         

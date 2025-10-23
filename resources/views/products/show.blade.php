@@ -1,4 +1,15 @@
-<x-web-layout :title="$product->product_name . ' - ' . setting('company_name', $companyProfile->company_name)" :metaDescription="Str::limit($product->description, 160)" :og_image="$og_image" :twitter_image="$twitter_image" :og_url="$og_url">
+<x-web-layout
+    :title="$product->product_name . ' - ' . setting('company_name', $companyProfile->company_name)"
+    :metaDescription="Str::limit($product->description, 160)"
+    :og_image="$og_image"
+    :twitter_image="$twitter_image"
+    :og_url="$og_url"
+    :og_type="'product'"
+    :og_site_name="setting('company_name', 'Megah Persada Nusantara')"
+    :twitter_card="'summary_large_image'"
+    :twitter_title="$product->product_name . ' - ' . setting('company_name', $companyProfile->company_name)"
+    :twitter_description="Str::limit($product->description, 160)"
+>
     <main class="flex-grow bg-background-light dark:bg-background-dark">
         <!-- Product Gallery - Proportional with Navigation -->
         <section class="relative w-full overflow-hidden bg-white">

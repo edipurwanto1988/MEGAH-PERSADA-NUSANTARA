@@ -1,3 +1,16 @@
+@props([
+    'title',
+    'metaDescription',
+    'og_image',
+    'twitter_image',
+    'og_url',
+    'og_type' => 'website',
+    'og_site_name',
+    'twitter_card' => 'summary_large_image',
+    'twitter_title',
+    'twitter_description'
+])
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
