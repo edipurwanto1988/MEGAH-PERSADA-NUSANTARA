@@ -62,7 +62,7 @@
                         <div class="flex items-center gap-4">
                             <a class="flex items-center gap-2" href="/">
                                 <div class="text-primary">
-                                    <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ $companyProfile->company_name ?? 'Mega Hjaya' }}" class="h-18 w-48">
+                                    <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}" class="h-18 w-48">
                                 </div>
                             </a>
                         </div>
@@ -181,7 +181,7 @@
                             <div class="flex items-center gap-4">
                                 <a class="flex items-center gap-2" href="/">
                                     <div class="text-primary">
-                                        <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ $companyProfile->company_name ?? 'Mega Hjaya' }}" class="h-18 w-48">
+                                        <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}" class="h-18 w-48">
                                     </div>
                                 </a>
                             </div>

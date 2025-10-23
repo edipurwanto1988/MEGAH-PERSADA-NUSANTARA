@@ -1,4 +1,4 @@
-<x-web-layout :title="($companyName ?? $companyProfile->company_name) . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')" :metaDescription="$metaDescription">
+<x-web-layout :title="(setting('company_name', $companyName ?? $companyProfile->company_name)) . ' - ' . ($companyProfile->description ? substr($companyProfile->description, 0, 50) . '...' : 'Distributing high-quality products for a better life')" :metaDescription="$metaDescription">
     <!-- Hero Section with Slider -->
     <section id="home" class="relative w-full aspect-[16/9] sm:aspect-[16/10] md:aspect-[16/8] lg:aspect-[16/7] xl:aspect-[16/6] overflow-hidden">
         @if($sliders && $sliders->count() > 0)
@@ -36,7 +36,7 @@
             <div class="w-full h-full bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent), url('https://picsum.photos/seed/hero/1920/1080.jpg'); background-position: center;">
                 <div class="absolute inset-0 flex items-center justify-center">
                     <div class="text-center text-white px-4">
-                        <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('company_name', $companyProfile->company_name ?? 'Welcome') }}</h1>
+                        <h1 class="text-4xl md:text-6xl font-bold mb-4">{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}</h1>
                         <p class="text-xl md:text-2xl">{{ $companyProfile->description ?? 'Discover our amazing products' }}</p>
                     </div>
                 </div>

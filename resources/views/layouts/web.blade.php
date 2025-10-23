@@ -32,8 +32,8 @@
                     <!-- Logo -->
                     <div class="flex items-center">
                         <a href="/" class="flex items-center space-x-2">
-                            <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ setting('company_name', $companyProfile->company_name ?? 'Mega Hjaya') }}" class="h-10">
-                            <span class="text-xl font-bold text-gray-800">{{ setting('company_name', $companyProfile->company_name ?? 'Mega Hjaya') }}</span>
+                            <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}" class="h-10">
+                            <span class="text-xl font-bold text-gray-800">{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}</span>
                         </a>
                     </div>
                     
@@ -83,8 +83,8 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <div>
                         <div class="flex items-center space-x-2 mb-4">
-                            <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ setting('company_name', $companyProfile->company_name ?? 'Mega Hjaya') }}" class="h-8">
-                            <span class="text-xl font-bold">{{ setting('company_name', $companyProfile->company_name ?? 'Mega Hjaya') }}</span>
+                            <img src="{{ asset('images/logo_megah_persada_nusantara.svg') }}" alt="{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}" class="h-8">
+                            <span class="text-xl font-bold">{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}</span>
                         </div>
                         <p class="text-gray-400">{{ $companyProfile->description ? substr($companyProfile->description, 0, 100) . '...' : 'Solusi Terbaik untuk Bisnis Anda' }}</p>
                     </div>
@@ -130,7 +130,7 @@
                 </div>
                 
                 <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                    <p>&copy; {{ date('Y') }} {{ setting('company_name', $companyProfile->company_name ?? 'Megah Persada Nusantara') }}. All rights reserved | Develop by <a href="https://jasawebpekanbaru.com/ ">Jasa pembuatan Website</a></p>
+                    <p>&copy; {{ date('Y') }} {{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}. All rights reserved | Develop by <a href="https://jasawebpekanbaru.com/ ">Jasa pembuatan Website</a></p>
                 </div>
             </div>
         </footer>
