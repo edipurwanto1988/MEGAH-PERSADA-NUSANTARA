@@ -39,11 +39,11 @@ class ProductController extends Controller
         // OG data - use full URLs for images
         $firstImage = $product->images->first();
         if ($firstImage) {
-            $og_image = asset('storage/' . $firstImage->image_url);
-            $twitter_image = asset('storage/' . $firstImage->image_url);
+            $og_image = url('storage/' . $firstImage->image_url);
+            $twitter_image = url('storage/' . $firstImage->image_url);
         } else {
-            $og_image = setting('og_image', asset('images/logo_megah_persada_nusantara.svg'));
-            $twitter_image = setting('twitter_image', setting('og_image', asset('images/logo_megah_persada_nusantara.svg')));
+            $og_image = setting('og_image', url('images/logo_megah_persada_nusantara.svg'));
+            $twitter_image = setting('twitter_image', setting('og_image', url('images/logo_megah_persada_nusantara.svg')));
         }
         $og_url = url()->current();
         
