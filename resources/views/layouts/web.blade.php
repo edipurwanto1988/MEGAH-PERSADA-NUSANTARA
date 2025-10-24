@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <!-- Favicon -->
+        <!-- Faviconn -->
         <link rel="icon" type="image/svg+xml" href="{{ asset('images/biochamb_logo.svg') }}">
 
         <title>{{ $title ?? setting('company_name', config('app.name', 'Megah Persada Nusantara')) }}</title>
