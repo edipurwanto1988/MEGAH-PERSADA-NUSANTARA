@@ -144,7 +144,7 @@
                 </div>
                 
                 <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-                    <p>&copy; {{ date('Y') }} {{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}. All rights reserved | Develop by <a href="https://jasawebpekanbaru.com/ ">Jasa pembuatan Website</a></p>
+                    <p>&copy; {{ date('Y') }} <a href="https://megahpersadanusantara.com/">{{ setting('company_name', $companyProfile->company_name ?? 'MEGAH PERSADA NUSANTARA') }}</a>. All rights reserved | Develop by <a href="https://jasawebpekanbaru.com/ ">Jasa pembuatan Website</a></p>
                 </div>
             </div>
         </footer>
