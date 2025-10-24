@@ -6,11 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Favicon -->
-        @if(setting('company_logo'))
-            <link rel="icon" type="image/x-icon" href="{{ asset('storage/' . setting('company_logo')) }}">
-        @else
-            <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
-        @endif
+        <link rel="icon" type="image/svg+xml" href="{{ asset('images/biochamb_logo.svg') }}">
 
         <title>{{ $title ?? setting('company_name', config('app.name', 'Megah Persada Nusantara')) }}</title>
 

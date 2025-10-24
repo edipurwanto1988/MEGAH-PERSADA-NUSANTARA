@@ -89,13 +89,13 @@ If images are not showing after upload, it's likely because the storage link is 
    ```
    If it shows `public/storage -> ../storage/app/public`, the link is correct.
 
-2. If the link doesn't exist, create it:
+2. If the link doesn't exist, create it:kk
    ```bash
    php artisan storage:link
    ```
 
 3. If the link exists but images still don't show, check the file permissions:
-   ```bash
+   ```bashkkk
    chmod -R 755 storage
    ```
 
